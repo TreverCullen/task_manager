@@ -1,0 +1,63 @@
+doctype html
+html(lan = en)
+	head
+		title Task Manager
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+		link(rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css")
+		link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
+		//- script(src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js")
+		//- script(src='/script.js')
+
+	body(ng-app="TaskApp" ng-cloak)
+
+		
+		div(ng-controller="MenuCtrl" )
+			div(class="md-padding")
+				md-fab-speed-dial(md-open="MenuCtrl.isOpen" ng-mouseenter="MenuCtrl.isOpen=true" ng-mouseleave="MenuCtrl.isOpen=false"
+								  md-direction="up" class="md-scale md-fab-bottom-right md-hover-full")
+					md-fab-trigger
+						md-button(aria-label="menu" class="md-fab md-warn")
+							md-icon(md-font-library="material-icons") menu
+								md-tooltip(md-direction="bottom") Menu
+					md-fab-actions
+						
+						md-button(aria-label="addTask" class="md-fab md-raised md-mini")
+							md-icon(md-font-library="material-icons") create
+								md-tooltip(md-direction="top") New Task
+						md-button(aria-label="addPage" class="md-fab md-raised md-mini")
+							md-icon(md-font-library="material-icons") add
+								md-tooltip(md-direction="bottom") New Page
+						md-button(aria-label="logout" class="md-fab md-raised md-mini")
+							md-icon(md-font-library="material-icons") exit_to_app
+								md-tooltip(md-direction="top") Logout
+						
+
+
+
+
+
+		//- ajax libraries
+		script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js")
+		script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js")
+		script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js")
+		script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js")
+
+		//- angular library
+		script(src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js")
+		script.
+			(function(){
+			'use strict';
+				angular.module('TaskApp', ['ngMaterial'])
+					.config(function($mdIconProvider) {
+						$mdIconProvider.fontSet('md', 'material-icons');
+					})
+					.controller('MenuCtrl', function() {
+						this.isOpen = false;
+					});
+			})();
+			
+
+
+
+		
