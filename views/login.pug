@@ -1,0 +1,57 @@
+extend base.pug
+		
+block content
+
+	div(ng-controller="LoginCtrl" )
+		md-content(class="md-padding" layout="row")
+			div(flex="33" layout-align="space-around center")
+				md-card
+					md-card-header
+						md-card-avatar
+							md-icon(md-font-library="material-icons") mood
+						span(class="md-headline") Task Manager
+					md-card-content.
+						This task management software is based on JIRA by Atlassian.
+						Please note this is not meant to be team collaboration software, and team based features will not be implemented.
+
+			div(flex="33" layout-align="space-around center")
+				md-card
+					md-card-header
+						md-card-avatar
+							md-icon(md-font-library="material-icons") mood
+						span(class="md-headline") Login
+					img(src="http://static1.squarespace.com/static/524057efe4b0325de8f92086/t/5245bca9e4b0f5755c9bd9cb/1380301996933/Beer+Toast")
+					md-card-content Our service uses Google Auth, so you don't need to worry about memorizing another account!
+					md-card-actions(layout="row" layout-align="end center")
+						md-button(class="md-raised md-primary" ng-click="Login()") Let's Go!
+
+			div(flex="33" layout-align="space-around center")
+				md-card
+					md-card-header
+						md-card-avatar
+							md-icon(md-font-library="material-icons") mood
+						span(class="md-headline") Contact
+					md-card-content If you have suggestions or a bug to report, send me an email at #[code trevercullen@gmail.com]
+
+
+block script
+
+	script.
+		(function(){
+		'use strict';
+			angular.module('TaskApp', ['ngMaterial'])
+				.config(function($mdIconProvider) {
+					$mdIconProvider.fontSet('md', 'material-icons');
+				})
+				.controller('LoginCtrl', function($scope) {
+					$scope.Login = function(){
+						var provider = new firebase.auth.GoogleAuthProvider();
+						firebase.auth().signInWithPopup(provider).then(function(result){
+							//- var user = result.user;
+							location.pathname = '/';
+						}).catch(function(error){
+							alert(error.message);
+						});
+					}
+				});
+		})();
