@@ -7,6 +7,9 @@ router.use(function(req, res, next) {
     next();
 });
 
+router.get('/', function(req, res) {
+	res.redirect('/login');
+});
 
 router.get('/tasks', function(req, res) {
 	res.render('tasks');
@@ -15,6 +18,5 @@ router.get('/tasks', function(req, res) {
 router.get('/login', function(req, res) {
 	res.render('login');
 });
-
 
 module.exports = router;
