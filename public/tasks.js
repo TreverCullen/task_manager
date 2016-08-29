@@ -58,7 +58,6 @@
 
 		// Load, Move, Delete, Edit Tasks
 		.controller('TaskCtrl', function($rootScope, $scope, $mdDialog){
-			console.log("Loading Tasks");
 			$scope.titles = ['Upcoming','In Progress','Done'];
 			$scope.icons = ['forward','done','delete'];
 			$scope.icon_names = ['Start','Done','Delete'];
@@ -78,6 +77,7 @@
 							date: val.due
 						};
 						$scope.items[val.stage].push(item);
+						$scope.$apply();
 					});
 					ref.on('child_changed', function(snapshot){
 						var val = snapshot.val();
@@ -175,7 +175,7 @@
 				$scope.title = data.title;
 				$scope.date = new Date(data.date);
 				$scope.desc = data.desc;
-				$scope.key = data.key
+				$scope.key = data.key;
 			});
 			$scope.submit = function(){
 				firebase.auth().onAuthStateChanged(function(user){

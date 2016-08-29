@@ -78,8 +78,7 @@ block content
 		div(layout="row")
 			div(flex="33" ng-repeat="arr in items track by $index" ng-init="$rowIndex = $index")
 				md-toolbar(layout="row")
-					div(class="md-toolbar-tools")
-						span {{titles[$index]}}
+					div(class="md-toolbar-tools") {{titles[$index]}}
 				md-content(style="height: 90vh; overflow: scroll")
 					md-card(ng-repeat="task in arr track by $index"
 					ng-click="UpdateTask($event, task.key, task.title, task.date, task.desc)")
@@ -91,8 +90,7 @@ block content
 							ng-click="MoveTask($event, task.key, $rowIndex); $event.stopPropagation()")
 								md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
 									md-tooltip(md-direction="top") {{icon_names[$rowIndex]}}
-						md-card-content(style="white-space: pre-wrap")
-							p(ng-model="desc") {{task.desc}}
+						md-card-content(style="white-space: pre-wrap" ng-model="desc") {{task.desc}}
 							
 						
 block script
