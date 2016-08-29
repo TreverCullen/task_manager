@@ -75,10 +75,9 @@ block content
 			  Tasks
 	//- ------------------ -//
 	div(ng-controller="TaskCtrl")
-		div(layout="row")
+		div(layout="row" style="height: 100vh")
 			div(flex="33" ng-repeat="arr in items track by $index" ng-init="$rowIndex = $index")
-				md-toolbar(layout="row")
-					div(class="md-toolbar-tools") {{titles[$index]}}
+				md-toolbar(layout="row" layout-align="center center") {{titles[$index]}}
 				md-content(style="height: 90vh; overflow: scroll")
 					md-card(ng-repeat="task in arr track by $index"
 					ng-click="UpdateTask($event, task.key, task.title, task.date, task.desc)")
