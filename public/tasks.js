@@ -41,6 +41,7 @@
 							title: $scope.title,
 							due: $scope.date.toString(),
 							desc: $scope.desc,
+							label: $scope.label,
 							stage: 0
 						});
 					}
@@ -53,6 +54,7 @@
 				$scope.title = "";
 				$scope.date = new Date();
 				$scope.desc = "";
+				$scope.label = "";
 			};
 		})
 
@@ -73,6 +75,7 @@
 							title: val.title,
 							desc: val.desc,
 							due: DateDiff(val.due),
+							label: val.label,
 							key: snapshot.key,
 							date: val.due
 						};
@@ -89,6 +92,7 @@
 									title: val.title,
 									desc: val.desc,
 									due: DateDiff(val.due),
+									label: val.label,
 									key: snapshot.key,
 									date: val.due
 								};
@@ -154,7 +158,7 @@
 					console.log('Task ' + key + ' has been deleted');
 				});
 			};
-			$scope.UpdateTask = function(event, key, title, date, desc){
+			$scope.UpdateTask = function(event, key, title, label, date, desc){
 				$mdDialog.show({
 					contentElement: '#update_task',
 					parent: angular.element(document.body),
@@ -165,6 +169,7 @@
 					key: key,
 					title: title,
 					date: date,
+					label: label,
 					desc: desc
 				});
 			};
@@ -173,22 +178,26 @@
 		.controller('UpdateTaskCtrl', function($scope, $mdDialog){
 			$scope.$on('UpdateData', function(event, data){
 				$scope.title = data.title;
+				$scope.label = data.label;
 				$scope.date = new Date(data.date);
 				$scope.desc = data.desc;
 				$scope.key = data.key;
 			});
 			$scope.submit = function(){
-				firebase.auth().onAuthStateChanged(function(user){
-					if (user){
-						var ref = firebase.database().ref(user.uid).child($scope.key);
-						ref.update({
-							title: $scope.title,
-							due: $scope.date,
-							desc: $scope.desc
-						});
-						$scope.cancel();
-					}
-				});
+				if ($scope.title != null && $scope.desc != null){
+					firebase.auth().onAuthStateChanged(function(user){
+						if (user){
+							var ref = firebase.database().ref(user.uid).child($scope.key);
+							ref.update({
+								title: $scope.title,
+								label: $scope.label,
+								due: $scope.date,
+								desc: $scope.desc
+							});
+							$scope.cancel();
+						}
+					});
+				}
 			};
 			$scope.cancel = function(){
 				$mdDialog.hide();

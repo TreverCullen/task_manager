@@ -1,1 +1,17 @@
+md-card-content{
+	white-space: pre-wrap;
+	margin-top: -15px;
+	font-size: 0.9em;
+}
+md-card-avatar .material-icons.High{ background: rgb(244,67,54); }
+md-card-avatar .material-icons.Medium{ background: #FFC107; }
+md-card-avatar .material-icons.Low{ background: #8BC34A; }
 
+md-dialog{
+	min-width: 35%;
+}
+
+md-toolbar{
+	min-height: 8vh;
+	max-height: 8vh;
+}
