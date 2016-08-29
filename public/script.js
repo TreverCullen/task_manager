@@ -8,9 +8,12 @@ firebase.initializeApp(config);
 
 window.onload = function(){
 	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
+		if (user && location.pathname == "/login") {
+			location.pathname = "/tasks";
 			console.log("Logged In");
-		} else {
+		}
+		else if (!user && location.pathname == "/tasks") {
+			location.pathname = "/login";
 			console.log("Not Logged In");
 		}
 	});

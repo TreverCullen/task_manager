@@ -19,10 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes
 var base = require('./routes/base');
 app.use('/', base);
-// var thread = require('./routes/thread');
-// app.use('/t', thread);
-// var user = require('./routes/user');
-// app.use('/user', user);
 
 // 404
 // app.use(function(req, res){

@@ -8,8 +8,8 @@ router.use(function(req, res, next) {
 });
 
 
-router.get('/', function(req, res) {
-	res.render('home');
+router.get('/tasks', function(req, res) {
+	res.render('tasks');
 });
 
 router.get('/login', function(req, res) {

@@ -6,15 +6,17 @@ block content
 			Menu Button
 	//- ------------------ -//
 	div(ng-controller="MenuCtrl")
-		md-fab-speed-dial(md-open="MenuCtrl.isOpen" ng-mouseenter="MenuCtrl.isOpen=true" ng-mouseleave="MenuCtrl.isOpen=false"
+		md-fab-speed-dial(md-open="MenuCtrl.isOpen" ng-mouseenter="MenuCtrl.isOpen=true; icon='create'"
+		ng-mouseleave="MenuCtrl.isOpen=false; icon='menu'"
 						  md-direction="up" class="md-scale md-fab-bottom-right md-hover-full")
 			md-fab-trigger
-				md-button(aria-label="Menu" class="md-fab md-warn")
-					md-icon(md-font-library="material-icons") menu
-			md-fab-actions
-				md-button(aria-label="Add Task" class="md-fab md-raised md-mini")
-					md-icon(md-font-library="material-icons" ng-click="TaskDialog($event)") create
+				md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog($event)")
+					md-icon(md-font-library="material-icons" ng-bind="icon")
 					md-tooltip(md-direction="left") New Task
+			md-fab-actions
+				//- md-button(aria-label="Add Task" class="md-fab md-raised md-mini")
+				//- 	md-icon(md-font-library="material-icons" ng-click="TaskDialog($event)") create
+				//- 	md-tooltip(md-direction="left") New Task
 				//- md-button(aria-label="Add Page" class="md-fab md-raised md-mini")
 				//- 	md-icon(md-font-library="material-icons") add
 				//- 	md-tooltip(md-direction="left") New Page
@@ -28,7 +30,7 @@ block content
 	div(ng-controller="SubmitTaskCtrl")
 		div(style="visibility: hidden")
 			div(class="md-dialog-container" id="create_task")
-				md-dialog(layout-padding="" aria-label="Create Task")
+				md-dialog(layout-padding aria-label="Create Task")
 					md-dialog-content
 						h4 Create Task
 						div(layout="column")
@@ -47,6 +49,30 @@ block content
 						md-button(ng-click="submit()") Submit
 
 	//- ------------------ -//
+		Update Task Dialog
+	//- ------------------ -//
+	div(ng-controller="UpdateTaskCtrl")
+		div(style="visibility: hidden")
+			div(class="md-dialog-container" id="update_task")
+				md-dialog(layout-padding aria-label="Update Task")
+					md-dialog-content
+						h4 Update Task
+						div(layout="column")
+							div(layout="row")
+								md-input-container
+									label Title
+									input(ng-model="title")
+								md-input-container
+									label Due Date
+									md-datepicker(ng-model="date")
+							md-input-container
+								label Description
+								textarea(ng-model="desc")
+					md-dialog-actions
+						md-button(ng-click="cancel()") Cancel
+						md-button(ng-click="submit()") Save
+
+	//- ------------------ -//
 			  Tasks
 	//- ------------------ -//
 	div(ng-controller="TaskCtrl")
@@ -56,16 +82,18 @@ block content
 					div(class="md-toolbar-tools")
 						span {{titles[$index]}}
 				md-content(style="bottom: 0px; height: 90vh; overflow: scroll")
-					md-card(ng-repeat="task in arr track by $index" ng-click="Update($event)")
+					md-card(ng-repeat="task in arr track by $index"
+					ng-click="UpdateTask($event, task.key, task.title, task.date, task.desc)")
 						md-card-title(layout-align="end center")
 							md-card-title-text(flex layout="row" layout-align="space-between center")
-								b(md-headline) {{task.title}}
-								i(md-subhead) {{task.due}}
-							md-button(class="md-icon-button" ng-click="Move($event, task.key, $rowIndex)")
+								b(md-headline ng-model="title") {{task.title}}
+								i(md-subhead ng-model="date") {{task.due}}
+							md-button(class="md-icon-button"
+							ng-click="MoveTask($event, task.key, $rowIndex); $event.stopPropagation()")
 									md-icon(md-font-library="material-icons" ) {{icons[$rowIndex]}}
 										md-tooltip(md-direction="top") {{icon_names[$rowIndex]}}
 						md-card-content(style="white-space: pre-wrap")
-							p {{task.desc}}
+							p(ng-model="desc") {{task.desc}}
 						md-card-actions(layout="row" layout-align="end center")
 							
 						
@@ -86,6 +114,7 @@ block script
 				// menu options including logout, add task
 				.controller('MenuCtrl', function($scope, $mdDialog) {
 					$scope.isOpen = false;
+					$scope.icon = 'menu';
 					$scope.Logout = function() {
 						firebase.auth().signOut().then(function() {
 							location.pathname = "/login";
@@ -102,6 +131,7 @@ block script
 						});
 					};
 				})
+
 				// Submit task
 				.controller('SubmitTaskCtrl', function($scope, $mdDialog){
 					$scope.date = new Date();
@@ -123,12 +153,14 @@ block script
 					$scope.cancel = function(){
 						$mdDialog.hide();
 						$scope.title = "";
-						$scope.date = new Date();
+						$scope.date = "";
 						$scope.desc = "";
-					}
+					};
 				})
+
 				// Load, Move, Delete, Edit Tasks
-				.controller('TaskCtrl', function($scope, $mdDialog){
+				.controller('TaskCtrl', function($rootScope, $scope, $mdDialog){
+					console.log("Loading Tasks");
 					$scope.titles = ['Upcoming','In Progress','Done'];
 					$scope.icons = ['forward','done','delete'];
 					$scope.icon_names = ['Start','Done','Delete'];
@@ -143,17 +175,34 @@ block script
 									title: val.title,
 									desc: val.desc,
 									due: DateDiff(val.due),
-									key: snapshot.key
+									key: snapshot.key,
+									date: val.due
 								};
 								$scope.items[val.stage].push(item);
 							});
 							ref.on('child_changed', function(snapshot){
 								var loc = snapshot.val().stage;
+								// normal update
+								for (var i = 0; i < $scope.items[loc].length; i++){
+									if ($scope.items[loc][i].key == snapshot.key){
+										var val = snapshot.val();
+										var item = {
+											title: val.title,
+											desc: val.desc,
+											due: DateDiff(val.due),
+											key: snapshot.key,
+											date: val.due
+										};
+										$scope.items[loc][i] = item;
+										return;
+									}
+								}
+								// move
 								for (var i = 0; i < $scope.items[loc - 1].length; i++){
 									if ($scope.items[loc - 1][i].key == snapshot.key){
 										$scope.items[loc].push($scope.items[loc - 1][i]);
 										$scope.items[loc - 1].splice(i, 1);
-										break;
+										return;
 									}
 								}
 							});
@@ -165,7 +214,7 @@ block script
 						var date = new Date(due_date);
 						return days[date.getDay()] + ', ' + mos[date.getMonth()] + ' ' + date.getDate();
 					}
-					$scope.Move = function(event, key, val){
+					$scope.MoveTask = function(event, key, val){
 						firebase.auth().onAuthStateChanged(function(user){
 							if (user){
 								var ref = firebase.database().ref(user.uid).child(key);
@@ -192,14 +241,48 @@ block script
 							console.log('Task ' + key + ' has been deleted');
 						});
 					};
+					$scope.UpdateTask = function(event, key, title, date, desc){
+						$mdDialog.show({
+							contentElement: '#update_task',
+							parent: angular.element(document.body),
+							targetEvent: event,
+							clickOutsideToClose: true
+						});
+						$rootScope.$broadcast('UpdateData', {
+							key: key,
+							title: title,
+							date: date,
+							desc: desc
+						});
+					};
+				})
 
-					$scope.Update = function(event){
-						
+				.controller('UpdateTaskCtrl', function($scope, $mdDialog){
+					$scope.$on('UpdateData', function(event, data){
+						$scope.title = data.title;
+						$scope.date = new Date(data.date);
+						$scope.desc = data.desc;
+						$scope.key = data.key
+					});
+					$scope.submit = function(){
+						firebase.auth().onAuthStateChanged(function(user){
+							if (user){
+								var ref = firebase.database().ref(user.uid).child($scope.key);
+								ref.update({
+									title: $scope.title,
+									due: $scope.date,
+									desc: $scope.desc
+								});
+								$scope.cancel();
+							}
+						});
+					};
+					$scope.cancel = function(){
+						$mdDialog.hide();
+						$scope.title = "";
+						$scope.date = new Date();
+						$scope.desc = "";
 					};
 				});
 		})();
-			
-
-
-
 		
