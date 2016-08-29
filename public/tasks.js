@@ -51,7 +51,7 @@
 			$scope.cancel = function(){
 				$mdDialog.hide();
 				$scope.title = "";
-				$scope.date = "";
+				$scope.date = new Date();
 				$scope.desc = "";
 			};
 		})
@@ -64,6 +64,7 @@
 			$scope.icon_names = ['Start','Done','Delete'];
 			$scope.items = [[],[],[]];
 
+			// load and refresh tasks
 			firebase.auth().onAuthStateChanged(function(user){
 				if (user){
 					var ref = firebase.database().ref(user.uid);
@@ -79,11 +80,11 @@
 						$scope.items[val.stage].push(item);
 					});
 					ref.on('child_changed', function(snapshot){
-						var loc = snapshot.val().stage;
+						var val = snapshot.val();
+						var loc = val.stage;
 						// normal update
 						for (var i = 0; i < $scope.items[loc].length; i++){
 							if ($scope.items[loc][i].key == snapshot.key){
-								var val = snapshot.val();
 								var item = {
 									title: val.title,
 									desc: val.desc,
@@ -96,12 +97,26 @@
 							}
 						}
 						// move
-						for (var i = 0; i < $scope.items[loc - 1].length; i++){
-							if ($scope.items[loc - 1][i].key == snapshot.key){
-								$scope.items[loc].push($scope.items[loc - 1][i]);
-								$scope.items[loc - 1].splice(i, 1);
-								return;
+						if (loc > 0){
+							for (var i = 0; i < $scope.items[loc - 1].length; i++){
+								if ($scope.items[loc - 1][i].key == snapshot.key){
+									$scope.items[loc].push($scope.items[loc - 1][i]);
+									$scope.items[loc - 1].splice(i, 1);
+									return;
+								}
 							}
+						}
+						// refresh (back to upcoming)
+						else{
+							for (; loc < 3; loc++){
+								for (var i = 0; i < $scope.items[loc].length; i++){
+									if ($scope.items[loc][i].key == snapshot.key){
+										$scope.items[0].push($scope.items[loc][i]);
+										$scope.items[loc].splice(i, 1);
+										return;
+									}
+								}
+							}	
 						}
 					});
 				}
@@ -180,6 +195,16 @@
 				$scope.title = "";
 				$scope.date = new Date();
 				$scope.desc = "";
+			};
+			$scope.RefreshTask = function(){
+				console.log($scope.key);
+				firebase.auth().onAuthStateChanged(function(user){
+					if (user){
+						var ref = firebase.database().ref(user.uid).child($scope.key);
+						ref.update({ stage: 0 });
+						$scope.cancel();
+					}
+				});
 			};
 		});
 })();

@@ -14,12 +14,6 @@ block content
 					md-icon(md-font-library="material-icons" ng-bind="icon")
 					md-tooltip(md-direction="left") New Task
 			md-fab-actions
-				//- md-button(aria-label="Add Task" class="md-fab md-raised md-mini")
-				//- 	md-icon(md-font-library="material-icons" ng-click="TaskDialog($event)") create
-				//- 	md-tooltip(md-direction="left") New Task
-				//- md-button(aria-label="Add Page" class="md-fab md-raised md-mini")
-				//- 	md-icon(md-font-library="material-icons") add
-				//- 	md-tooltip(md-direction="left") New Page
 				md-button(aria-label="logout" class="md-fab md-raised md-mini")
 					md-icon(md-font-library="material-icons" ng-click="Logout()") exit_to_app
 					md-tooltip(md-direction="left") Logout
@@ -69,8 +63,13 @@ block content
 								label Description
 								textarea(ng-model="desc")
 					md-dialog-actions
-						md-button(ng-click="cancel()") Cancel
-						md-button(ng-click="submit()") Save
+						div(layout="row" style="width: 100%" layout-align="space-between center")
+							md-button(class="md-icon-button" ng-click="RefreshTask()")
+								md-icon(md-font-library="material-icons") refresh
+								md-tooltip(md-direction="right") Move to Upcoming
+							div
+								md-button(ng-click="cancel()") Cancel
+								md-button(ng-click="submit()") Save
 
 	//- ------------------ -//
 			  Tasks
@@ -87,14 +86,13 @@ block content
 						md-card-title(layout-align="end center")
 							md-card-title-text(flex layout="row" layout-align="space-between center")
 								b(md-headline ng-model="title") {{task.title}}
-								i(md-subhead ng-model="date") {{task.due}}
+								i(md-subhead ng-model="date" style="font-size: 0.8em") {{task.due}}
 							md-button(class="md-icon-button"
 							ng-click="MoveTask($event, task.key, $rowIndex); $event.stopPropagation()")
-									md-icon(md-font-library="material-icons" ) {{icons[$rowIndex]}}
-										md-tooltip(md-direction="top") {{icon_names[$rowIndex]}}
+								md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
+									md-tooltip(md-direction="top") {{icon_names[$rowIndex]}}
 						md-card-content(style="white-space: pre-wrap")
 							p(ng-model="desc") {{task.desc}}
-						md-card-actions(layout="row" layout-align="end center")
 							
 						
 block script
