@@ -103,7 +103,7 @@ block content
 								md-button(class="md-icon-button" style="float: right"
 								ng-click="MoveTask($event, task.key, $rowIndex); $event.stopPropagation()")
 									md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
-										md-tooltip(md-direction="top") {{icon_names[$rowIndex]}}
+										md-tooltip(md-direction="left") {{icon_names[$rowIndex]}}
 
 						md-card-content(ng-model="desc") {{task.desc}}
 							
