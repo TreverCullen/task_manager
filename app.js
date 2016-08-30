@@ -4,11 +4,10 @@ var http = require('http');
 var pug = require('pug');
 var path = require('path');
 var bodyParser = require('body-parser');
-// var db = require('./firebase');
 
 // app config
 var app = express();
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
 
@@ -21,9 +20,9 @@ var base = require('./routes/base');
 app.use('/', base);
 
 // 404
-// app.use(function(req, res){
-//     res.render('404');
-// });
+app.use(function(req, res){
+    res.render('login');
+});
 
 // start on port
 app.listen(app.get('port'), function() {
