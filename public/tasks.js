@@ -66,8 +66,13 @@
 			$scope.items = [[],[],[]];
 
 			// load and refresh tasks
+			// or clear if not logged in
 			firebase.auth().onAuthStateChanged(function(user){
-				if (user){
+				if (!user){
+					for (var i = 0; i < 3; i++)
+						$scope.items[i] = [];
+				}
+				else {
 					var ref = firebase.database().ref(user.uid);
 					ref.on('child_added', function(snapshot){
 						var val = snapshot.val();
@@ -92,9 +97,9 @@
 									title: val.title,
 									desc: val.desc,
 									due: DateDiff(val.due),
+									date: val.due,
 									label: val.label,
-									key: snapshot.key,
-									date: val.due
+									key: snapshot.key
 								};
 								$scope.items[loc][i] = item;
 								return;
@@ -204,9 +209,9 @@
 				$scope.title = "";
 				$scope.date = new Date();
 				$scope.desc = "";
+				$scope.label = "";
 			};
 			$scope.RefreshTask = function(){
-				console.log($scope.key);
 				firebase.auth().onAuthStateChanged(function(user){
 					if (user){
 						var ref = firebase.database().ref(user.uid).child($scope.key);
