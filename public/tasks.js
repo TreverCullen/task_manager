@@ -97,6 +97,7 @@
 									key: snapshot.key
 								};
 								$scope.items[loc][i] = item;
+								$scope.$apply();
 								return;
 							}
 						}
@@ -106,17 +107,18 @@
 								if ($scope.items[loc - 1][i].key == snapshot.key){
 									$scope.items[loc].push($scope.items[loc - 1][i]);
 									$scope.items[loc - 1].splice(i, 1);
+									$scope.$apply();
 									return;
 								}
 							}
 						}
 						// refresh (back to upcoming)
-						else{
-							for (; loc < 3; loc++){
+						else{ for (; loc < 3; loc++){
 								for (var i = 0; i < $scope.items[loc].length; i++){
 									if ($scope.items[loc][i].key == snapshot.key){
 										$scope.items[0].push($scope.items[loc][i]);
 										$scope.items[loc].splice(i, 1);
+										$scope.$apply();
 										return;
 									}
 								}
@@ -125,12 +127,12 @@
 					});
 				}
 			});
-			function DateDiff(due_date) {
+			var DateDiff = function (due_date) {
 				var days = ['Sun','Mon','Tues','Wed','Thurs','Fri','Sat'];
 				var mos = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 				var date = new Date(due_date);
 				return days[date.getDay()] + ', ' + mos[date.getMonth()] + ' ' + date.getDate();
-			}
+			};
 			$scope.MoveTask = function(event, key, val){
 				firebase.auth().onAuthStateChanged(function(user){
 					if (user){
