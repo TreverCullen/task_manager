@@ -7,11 +7,31 @@ md-card-avatar .material-icons.High{ background: rgb(244,67,54); }
 md-card-avatar .material-icons.Medium{ background: #FFC107; }
 md-card-avatar .material-icons.Low{ background: #8BC34A; }
 
-md-dialog{
-	min-width: 35%;
+md-fab-speed-dial{
+	position: fixed !important;
 }
 
-md-toolbar{
-	min-height: 8vh;
-	max-height: 8vh;
+@media screen and (max-width: 600px){
+	.full-row{
+		margin-bottom: 100px;
+	}
 }
+
+
+@media screen and (min-width: 600px){
+	md-dialog{
+		min-width: 35%;
+	}
+	md-toolbar{
+		min-height: 8vh;
+		max-height: 8vh;
+	}
+	md-content{
+		height: 92vh;
+		overflow: scroll;
+	}
+	.full-row{
+		height: 100vh;
+	}
+}
+	

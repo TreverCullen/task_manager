@@ -25,14 +25,14 @@
 					contentElement: '#create_task',
 					parent: angular.element(document.body),
 					targetEvent: event,
-					clickOutsideToClose: true
+					clickOutsideToClose: true,
+					fullscreen: true
 				});
 			};
 		})
 
 		// Submit task
 		.controller('SubmitTaskCtrl', function($scope, $mdDialog){
-			$scope.date = new Date();
 			$scope.submit = function(){
 				if ($scope.title != null && $scope.desc != null){
 					var user = firebase.auth().currentUser;
@@ -51,10 +51,10 @@
 			// cancel task and clear form
 			$scope.cancel = function(){
 				$mdDialog.hide();
-				$scope.title = "";
-				$scope.date = new Date();
-				$scope.desc = "";
-				$scope.label = "";
+				$scope.title = null;
+				$scope.date = null;
+				$scope.desc = null;
+				$scope.label = null;
 			};
 		})
 
@@ -165,7 +165,8 @@
 					contentElement: '#update_task',
 					parent: angular.element(document.body),
 					targetEvent: event,
-					clickOutsideToClose: true
+					clickOutsideToClose: true,
+					fullscreen: true
 				});
 				$rootScope.$broadcast('UpdateData', {
 					key: key,
