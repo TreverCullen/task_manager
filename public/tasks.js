@@ -34,7 +34,7 @@
 		// Submit task
 		.controller('SubmitTaskCtrl', function($scope, $mdDialog){
 			$scope.submit = function(){
-				if ($scope.title != null && $scope.desc != null){
+				if ($scope.title != null && $scope.desc != null && $scope.date != null){
 					var user = firebase.auth().currentUser;
 					if (user){
 						firebase.database().ref(user.uid).push({
@@ -69,7 +69,7 @@
 				$scope.items = [[],[],[]];
 				if(user) {
 					var ref = firebase.database().ref(user.uid);
-					ref.on('child_added', function(snapshot){
+					ref.orderByChild('label').on('child_added', function(snapshot){
 						var val = snapshot.val();
 						var item = {
 							title: val.title,
@@ -187,7 +187,7 @@
 				$scope.key = data.key;
 			});
 			$scope.submit = function(){
-				if ($scope.title != null && $scope.desc != null){
+				if ($scope.title != null && $scope.desc != null && $scope.due != null){
 					firebase.auth().onAuthStateChanged(function(user){
 						if (user){
 							var ref = firebase.database().ref(user.uid).child($scope.key);
@@ -204,10 +204,10 @@
 			};
 			$scope.cancel = function(){
 				$mdDialog.hide();
-				$scope.title = "";
-				$scope.date = new Date();
-				$scope.desc = "";
-				$scope.label = "";
+				$scope.title = null;
+				$scope.date = null;
+				$scope.desc = null;
+				$scope.label = null;
 			};
 			$scope.RefreshTask = function(){
 				firebase.auth().onAuthStateChanged(function(user){
