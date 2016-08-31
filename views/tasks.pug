@@ -30,7 +30,7 @@ block content
 						div(layout="column")
 							md-input-container
 									label Title
-									input(ng-model="title" required)
+									input(ng-model="title")
 							div(layout="row")
 								md-input-container(class="md-block" flex)
 									label Priority
@@ -40,8 +40,8 @@ block content
 										md-option(value="Low") Low
 								md-input-container(class="md-block" flex)
 									label Due Date
-									md-datepicker(ng-model="date" required)
-							md-input-container(required)
+									md-datepicker(ng-model="date")
+							md-input-container
 								label Description
 								textarea(ng-model="desc")
 					md-dialog-actions
@@ -60,7 +60,7 @@ block content
 						div(layout="column")
 							md-input-container
 									label Title
-									input(ng-model="title" required)
+									input(ng-model="title")
 							div(layout="row")
 								md-input-container(class="md-block" flex)
 									label Priority
@@ -70,8 +70,8 @@ block content
 										md-option(value="Low") Low
 								md-input-container(class="md-block" flex)
 									label Due Date
-									md-datepicker(ng-model="date" required)
-							md-input-container(required)
+									md-datepicker(ng-model="date")
+							md-input-container
 								label Description
 								textarea(ng-model="desc")
 					md-dialog-actions
