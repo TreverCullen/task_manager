@@ -135,12 +135,12 @@
 				firebase.auth().onAuthStateChanged(function(user){
 					if (user){
 						var ref = firebase.database().ref(user.uid).child(key);
-						if (val < 2) ref.update({ stage: val + 1 });	
+						if (val < 2) ref.update({ stage: val + 1 });
 						else DeleteTask(event, ref, key);
 					}
 				});
 			};
-			function DeleteTask(event, ref, key){
+			var DeleteTask = function(event, ref, key){
 				var confirm = $mdDialog.confirm()
 					.title('Are you sure you want to delete this task?')
 					.textContent('This cannot be undone.')
