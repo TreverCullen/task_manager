@@ -33,8 +33,12 @@
 
 		// Submit task
 		.controller('SubmitTaskCtrl', function($scope, $mdDialog){
+			$scope.labels = ["High","Medium","Low"];
 			$scope.submit = function(){
-				if ($scope.title != null && $scope.desc != null && $scope.date != null){
+				if (!$scope.title || !$scope.desc
+					|| !$scope.date || !$scope.label) 
+					$scope.error = true;
+				else{
 					var user = firebase.auth().currentUser;
 					if (user){
 						firebase.database().ref(user.uid).push({
@@ -52,9 +56,10 @@
 			$scope.cancel = function(){
 				$mdDialog.hide();
 				$scope.title = null;
-				$scope.date = null;
 				$scope.desc = null;
+				$scope.date = null;
 				$scope.label = null;
+				$scope.error = false;
 			};
 		})
 
@@ -186,8 +191,13 @@
 				$scope.desc = data.desc;
 				$scope.key = data.key;
 			});
+			$scope.labels = ["High","Medium","Low"];
+				
 			$scope.submit = function(){
-				if ($scope.title != null && $scope.desc != null && $scope.due != null){
+				if (!$scope.title || !$scope.desc
+					|| !$scope.date || !$scope.label) 
+					$scope.error = true;
+				else{
 					firebase.auth().onAuthStateChanged(function(user){
 						if (user){
 							var ref = firebase.database().ref(user.uid).child($scope.key);
@@ -205,9 +215,10 @@
 			$scope.cancel = function(){
 				$mdDialog.hide();
 				$scope.title = null;
-				$scope.date = null;
 				$scope.desc = null;
+				$scope.date = null;
 				$scope.label = null;
+				$scope.error = null;
 			};
 			$scope.RefreshTask = function(){
 				firebase.auth().onAuthStateChanged(function(user){
