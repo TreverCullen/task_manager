@@ -126,7 +126,7 @@
 								if ($scope.items[loc][i].key == snapshot.key){
 									$scope.items[0].push($scope.items[loc][i]);
 									$scope.items[loc].splice(i, 1);
-									$scope.items[loc].sort(compFunc);
+									$scope.items[0].sort(compFunc);
 									$scope.$apply();
 									return;
 								}
