@@ -19,7 +19,7 @@ md-fab-speed-dial{
 
 @media screen and (min-width: 600px){
 	md-dialog{
-		min-width: 35%;
+		min-width: 40%;
 	}
 	md-toolbar{
 		min-height: 8vh;
@@ -35,4 +35,4 @@ md-fab-speed-dial{
 	.login{
 		flex: .33;
 	}
-}	
+}
