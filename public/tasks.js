@@ -36,14 +36,14 @@
 			$scope.labels = ["High","Medium","Low"];
 			$scope.submit = function(){
 				if (!$scope.title || !$scope.desc
-					|| !$scope.date || !$scope.label) 
+					|| !$scope.date || !$scope.label)
 					$scope.error = true;
 				else{
 					var user = firebase.auth().currentUser;
 					if (user){
 						firebase.database().ref(user.uid).push({
 							title: $scope.title,
-							due: $scope.date.toString(),
+							due: $scope.date.getTime(),
 							desc: $scope.desc,
 							label: $scope.label,
 							stage: 0
@@ -74,7 +74,7 @@
 				$scope.items = [[],[],[]];
 				if(user) {
 					var ref = firebase.database().ref(user.uid);
-					ref.orderByChild('label').on('child_added', function(snapshot){
+					ref.orderByChild('due').on('child_added', function(snapshot){
 						var val = snapshot.val();
 						var item = {
 							title: val.title,
@@ -85,6 +85,7 @@
 							date: val.due
 						};
 						$scope.items[val.stage].push(item);
+						$scope.items[val.stage].sort(compFunc);
 						$scope.$apply();
 					});
 					ref.on('child_changed', function(snapshot){
@@ -102,6 +103,7 @@
 									key: snapshot.key
 								};
 								$scope.items[loc][i] = item;
+								$scope.items[loc].sort(compFunc);
 								$scope.$apply();
 								return;
 							}
@@ -112,6 +114,7 @@
 								if ($scope.items[loc - 1][i].key == snapshot.key){
 									$scope.items[loc].push($scope.items[loc - 1][i]);
 									$scope.items[loc - 1].splice(i, 1);
+									$scope.items[loc].sort(compFunc);
 									$scope.$apply();
 									return;
 								}
@@ -119,24 +122,28 @@
 						}
 						// refresh (back to upcoming)
 						else{ for (; loc < 3; loc++){
-								for (var i = 0; i < $scope.items[loc].length; i++){
-									if ($scope.items[loc][i].key == snapshot.key){
-										$scope.items[0].push($scope.items[loc][i]);
-										$scope.items[loc].splice(i, 1);
-										$scope.$apply();
-										return;
-									}
+							for (var i = 0; i < $scope.items[loc].length; i++){
+								if ($scope.items[loc][i].key == snapshot.key){
+									$scope.items[0].push($scope.items[loc][i]);
+									$scope.items[loc].splice(i, 1);
+									$scope.items[loc].sort(compFunc);
+									$scope.$apply();
+									return;
 								}
-							}	
-						}
+							}
+						}}
 					});
 				}
 			});
-			var DateDiff = function (due_date) {
-				var days = ['Sun','Mon','Tues','Wed','Thurs','Fri','Sat'];
+			function compFunc(a, b){
+				return a.date > b.date;
+			}
+			var DateDiff = function(due_date) {
+				var days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
 				var mos = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 				var date = new Date(due_date);
-				return days[date.getDay()] + ', ' + mos[date.getMonth()] + ' ' + date.getDate();
+				return days[date.getDay()] + ', ' + date.getDate() + ' '
+				+ mos[date.getMonth()] + ' ' + date.getFullYear();
 			};
 			$scope.MoveTask = function(event, key, val){
 				firebase.auth().onAuthStateChanged(function(user){
@@ -192,10 +199,10 @@
 				$scope.key = data.key;
 			});
 			$scope.labels = ["High","Medium","Low"];
-				
+
 			$scope.submit = function(){
 				if (!$scope.title || !$scope.desc
-					|| !$scope.date || !$scope.label) 
+					|| !$scope.date || !$scope.label)
 					$scope.error = true;
 				else{
 					firebase.auth().onAuthStateChanged(function(user){
@@ -204,7 +211,7 @@
 							ref.update({
 								title: $scope.title,
 								label: $scope.label,
-								due: $scope.date,
+								due: $scope.date.getTime(),
 								desc: $scope.desc
 							});
 							$scope.cancel();
