@@ -4,9 +4,11 @@ md-card-content{
 	margin-top: -15px;
 	font-size: 0.9em;
 }
-md-card-avatar .material-icons.High{ background: rgb(244,67,54); }
-md-card-avatar .material-icons.Medium{ background: #FFC107; }
-md-card-avatar .material-icons.Low{ background: #8BC34A; }
+md-card-avatar .material-icons.Red{ background: rgb(244,67,54); }
+md-card-avatar .material-icons.Green{ background: #FFC107; }
+md-card-avatar .material-icons.Yellow{ background: #8BC34A; }
+md-card-avatar .material-icons.Blue{ background: #2196F3; }
+md-card-avatar .material-icons.Purple{ background: #9C27B0; }
 
 md-fab-speed-dial{
 	position: fixed !important;
