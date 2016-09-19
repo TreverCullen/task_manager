@@ -30,7 +30,8 @@ block content
 							h4 Create Task
 							p(ng-init="error = false" ng-if="error == true"
 							style="color: red; size: .5em") * All Fields Required
-						md-input-container
+						div(layout="row")
+							md-input-container(flex)
 								label Title
 								input(ng-model="title")
 						div(layout="row")
@@ -41,9 +42,10 @@ block content
 							md-input-container(class="md-block")
 								label Due Date
 								md-datepicker(ng-model="date")
-						md-input-container
-							label Description
-							textarea(ng-model="desc")
+						div(layout="row")
+							md-input-container(flex)
+								label Description
+								textarea(ng-model="desc")
 
 					md-dialog-actions
 						md-button(ng-click="cancel()") Cancel
@@ -61,7 +63,8 @@ block content
 							h4 Update Task
 							p(ng-init="error = false" ng-if="error == true"
 							style="color: red; size: .5em") * All Fields Required
-						md-input-container
+						div(layout="row")
+							md-input-container(flex)
 								label Title
 								input(ng-model="title")
 						div(layout="row")
@@ -72,9 +75,10 @@ block content
 							md-input-container(class="md-block")
 								label Due Date
 								md-datepicker(ng-model="date")
-						md-input-container
-							label Description
-							textarea(ng-model="desc")
+						div(layout="row")
+							md-input-container(flex)
+								label Description
+								textarea(ng-model="desc")
 
 					md-dialog-actions
 						div(layout="row" style="width: 100%" layout-align="space-between center")
