@@ -14,6 +14,9 @@ block content
 					md-icon(md-font-library="material-icons" ng-bind="icon")
 					md-tooltip(md-direction="left") New Task
 			md-fab-actions
+				md-button(aria-label="sort" class="md-fab md-raised md-mini")
+					md-icon(md-font-library="material-icons" ng-click="Sort()") swap_vert
+					md-tooltip(md-direction="left") Change Sort
 				md-button(aria-label="logout" class="md-fab md-raised md-mini")
 					md-icon(md-font-library="material-icons" ng-click="Logout()") exit_to_app
 					md-tooltip(md-direction="left") Logout

@@ -10,7 +10,7 @@
 				.backgroundPalette('grey');
 		})
 		// menu options including logout, add task
-		.controller('MenuCtrl', function($scope, $mdDialog) {
+		.controller('MenuCtrl', function($rootScope, $scope, $mdDialog) {
 			$scope.isOpen = false;
 			$scope.icon = 'menu';
 			$scope.Logout = function() {
@@ -28,6 +28,16 @@
 					clickOutsideToClose: true,
 					fullscreen: true
 				});
+			};
+
+			$scope.sortType = 'label';
+			$scope.Sort = function(){
+				$rootScope.$broadcast('ChangeSort', {
+					type: $scope.sortType
+				});
+				if ($scope.sortType == 'date')
+					$scope.sortType = 'label';
+				else $scope.sortType = 'date';
 			};
 		})
 
@@ -135,9 +145,21 @@
 					});
 				}
 			});
+
+			// for sorting
+			$scope.sortType = 'date';
+			$scope.$on('ChangeSort', function(event, data){
+				$scope.sortType = data.type;
+				for (var i = 0; i < 3; i++)
+					$scope.items[i].sort(compFunc);
+				$scope.$apply();
+			});
 			function compFunc(a, b){
+				if ($scope.sortType == 'label' && a.label != b.label)
+					return a.label > b.label;
 				return a.date > b.date;
 			}
+
 			var DateDiff = function(due_date) {
 				var days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
 				var mos = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
