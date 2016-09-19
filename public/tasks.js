@@ -146,13 +146,12 @@
 				+ mos[date.getMonth()] + ' ' + date.getFullYear();
 			};
 			$scope.MoveTask = function(event, key, val){
-				firebase.auth().onAuthStateChanged(function(user){
-					if (user){
-						var ref = firebase.database().ref(user.uid).child(key);
-						if (val < 2) ref.update({ stage: val + 1 });
-						else DeleteTask(event, ref, key);
-					}
-				});
+				var user = firebase.auth().currentUser;
+				if (user){
+					var ref = firebase.database().ref(user.uid).child(key);
+					if (val < 2) ref.update({ stage: val + 1 });
+					else DeleteTask(event, ref, key);
+				}
 			};
 			var DeleteTask = function(event, ref, key){
 				var confirm = $mdDialog.confirm()
@@ -205,18 +204,17 @@
 					|| !$scope.date || !$scope.label)
 					$scope.error = true;
 				else{
-					firebase.auth().onAuthStateChanged(function(user){
-						if (user){
-							var ref = firebase.database().ref(user.uid).child($scope.key);
-							ref.update({
-								title: $scope.title,
-								label: $scope.label,
-								due: $scope.date.getTime(),
-								desc: $scope.desc
-							});
-							$scope.cancel();
-						}
-					});
+					var user = firebase.auth().currentUser;
+					if (user){
+						var ref = firebase.database().ref(user.uid).child($scope.key);
+						ref.update({
+							title: $scope.title,
+							label: $scope.label,
+							due: $scope.date.getTime(),
+							desc: $scope.desc
+						});
+						$scope.cancel();
+					}
 				}
 			};
 			$scope.cancel = function(){
@@ -228,13 +226,12 @@
 				$scope.error = null;
 			};
 			$scope.RefreshTask = function(){
-				firebase.auth().onAuthStateChanged(function(user){
-					if (user){
-						var ref = firebase.database().ref(user.uid).child($scope.key);
-						ref.update({ stage: 0 });
-						$scope.cancel();
-					}
-				});
+				var user = firebase.auth().currentUser;
+				if (user){
+					var ref = firebase.database().ref(user.uid).child($scope.key);
+					ref.update({ stage: 0 });
+					$scope.cancel();
+				}
 			};
 		});
 })();
