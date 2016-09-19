@@ -5,6 +5,7 @@ md-card-content{
 	font-size: 0.9em;
 }
 md-card-avatar .material-icons.Red{ background: rgb(244,67,54); }
+md-card-avatar .material-icons.Orange{ background: #FF9800; }
 md-card-avatar .material-icons.Yellow{ background: #FFC107; }
 md-card-avatar .material-icons.Green{ background: #8BC34A; }
 md-card-avatar .material-icons.Blue{ background: #2196F3; }

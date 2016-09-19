@@ -33,7 +33,7 @@
 
 		// Submit task
 		.controller('SubmitTaskCtrl', function($scope, $mdDialog){
-			$scope.labels = ["Red","Green","Yellow","Blue","Purple"];
+			$scope.labels = ["Red","Orange","Yellow","Green","Blue","Purple"];
 			$scope.submit = function(){
 				if (!$scope.title || !$scope.desc
 					|| !$scope.date || !$scope.label)
@@ -197,7 +197,7 @@
 				$scope.desc = data.desc;
 				$scope.key = data.key;
 			});
-			$scope.labels = ["Red","Green","Yellow","Blue","Purple"];
+			$scope.labels = ["Red","Orange","Yellow","Green","Blue","Purple"];
 
 			$scope.submit = function(){
 				if (!$scope.title || !$scope.desc
