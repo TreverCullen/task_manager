@@ -1,5 +1,5 @@
 extend base.pug
-		
+
 block content
 
 	div(ng-controller="LoginCtrl" )
@@ -8,12 +8,15 @@ block content
 				md-card
 					md-card-header
 						md-card-avatar
-							md-icon(md-font-library="material-icons") account_box
-						span(class="md-headline") Login
+							md-icon(md-font-library="material-icons" class="Blue") account_box
+						md-card-header-text
+							div(layout="column")
+								span(class="md-title" style="font-size: 1.1em") Tasqer
+								span(class="md-subhead") Login
 					md-card-content Tasqer is an easy to use, light-weight, simple task management system. Login with your Google account to gain access now.
 					md-card-actions(layout="row" layout-align="end center")
 						md-button(ng-click="Login()") Let's Go!
-				
+
 
 block script
 

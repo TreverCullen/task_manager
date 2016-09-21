@@ -84,7 +84,8 @@
 				$scope.items = [[],[],[]];
 				if(user) {
 					var ref = firebase.database().ref(user.uid);
-					ref.orderByChild('due').on('child_added', function(snapshot){
+					ref.off();	// detach old listeners from previous sesions
+					ref.on('child_added', function(snapshot){
 						var val = snapshot.val();
 						var item = {
 							title: val.title,
