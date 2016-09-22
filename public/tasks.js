@@ -210,6 +210,11 @@
 					desc: desc
 				});
 			};
+			$scope.addClass = function(col){
+				if (col == 2)
+					return 'pad';
+				return null;
+			};
 		})
 
 		.controller('UpdateTaskCtrl', function($scope, $mdDialog){
