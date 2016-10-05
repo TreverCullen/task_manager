@@ -78,10 +78,10 @@
 			$scope.titles = ['Upcoming','In Progress','Done'];
 			$scope.icons = ['forward','done','delete'];
 			$scope.icon_names = ['Start','Done','Delete'];
-			$scope.items = [[],[],[]];
 
 			// load and refresh tasks
 			firebase.auth().onAuthStateChanged(function(user){
+				$scope.items = [[],[],[]];
 				if(user) {
 					var ref = firebase.database().ref(user.uid);
 					ref.off();	// detach old listeners from previous sesions
