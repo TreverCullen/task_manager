@@ -43,7 +43,7 @@
 
 		// Submit task
 		.controller('SubmitTaskCtrl', function($scope, $mdDialog){
-			$scope.labels = ["Red","Orange","Yellow","Green","Blue","Purple"];
+			$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
 			$scope.submit = function(){
 				if (!$scope.title || !$scope.desc
 					|| !$scope.date || !$scope.label)
@@ -78,10 +78,10 @@
 			$scope.titles = ['Upcoming','In Progress','Done'];
 			$scope.icons = ['forward','done','delete'];
 			$scope.icon_names = ['Start','Done','Delete'];
+			$scope.items = [[],[],[]];
 
 			// load and refresh tasks
 			firebase.auth().onAuthStateChanged(function(user){
-				$scope.items = [[],[],[]];
 				if(user) {
 					var ref = firebase.database().ref(user.uid);
 					ref.off();	// detach old listeners from previous sesions
@@ -156,9 +156,11 @@
 				$scope.$apply();
 			});
 			function compFunc(a, b){
-				if ($scope.sortType == 'label' && a.label != b.label)
-					return a.label > b.label;
-				return a.date > b.date;
+				if ($scope.sortType == 'label' && a.label != b.label){
+					var l = ["Red","Orange","Yellow","Green","Blue","Purple","None"];
+					return l.indexOf(a.label) - l.indexOf(b.label);
+				}
+				return a.date - b.date;
 			}
 
 			var DateDiff = function(due_date) {
@@ -225,7 +227,7 @@
 				$scope.desc = data.desc;
 				$scope.key = data.key;
 			});
-			$scope.labels = ["Red","Orange","Yellow","Green","Blue","Purple"];
+			$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
 
 			$scope.submit = function(){
 				if (!$scope.title || !$scope.desc
