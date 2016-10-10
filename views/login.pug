@@ -30,12 +30,7 @@ block script
 				.controller('LoginCtrl', function($scope) {
 					$scope.Login = function(){
 						var provider = new firebase.auth.GoogleAuthProvider();
-						firebase.auth().signInWithPopup(provider).then(function(result){
-							//- var user = result.user;
-							location.pathname = '/';
-						}).catch(function(error){
-							alert(error.message);
-						});
+						firebase.auth().signInWithRedirect(provider);
 					}
 				});
 		})();
