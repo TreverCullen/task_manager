@@ -14,24 +14,33 @@ md-card-avatar .material-icons.Purple{ background: #9C27B0; }
 md-fab-speed-dial{ position: fixed !important; }
 md-toolbar{ box-shadow: 2px 2px 2px rgba(0,0,0,0.12); }
 md-content{ box-sizing: border-box; }
-.pad{ padding-bottom: 100px; }
+
+.mobile_container{
+	width: 100vw;
+	overflow-x: scroll;
+	/* Not available in Chrome yet */
+	/*scroll-snap-points-x: repeat(100vw);
+	scroll-snap-type: mandatory;*/
+}
+.full-row{
+	height: 100vh;
+	width: 300vw;
+}
+md-toolbar{
+	min-height: 8vh;
+	max-height: 8vh;
+}
+md-content{
+	height: 92vh;
+	overflow-y: scroll;
+	padding-bottom: 100px;
+}
+
 
 @media screen and (min-width: 600px){
-	md-dialog{
-		min-width: 40%;
-	}
-	md-toolbar{
-		min-height: 8vh;
-		max-height: 8vh;
-	}
-	md-content{
-		height: 92vh;
-		overflow: scroll;
-	}
-	.full-row{
-		height: 100vh;
-	}
-	.login{
-		flex: .33;
-	}
+	md-dialog{ min-width: 40%; }
+	.full-row{ width: 100vw; }
+	md-content{ padding-bottom: 0px; }
+	.pad{ padding-bottom: 100px; }
+	.login{ flex: .33; }
 }

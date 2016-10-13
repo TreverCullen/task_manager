@@ -95,8 +95,8 @@ block content
 	//- ------------------ -//
 			  Tasks
 	//- ------------------ -//
-	div(ng-controller="TaskCtrl")
-		div(layout="row" layout-xs="column" class="full-row")
+	div(ng-controller="TaskCtrl" class="mobile_container")
+		div(layout="row" class="full-row")
 			div(flex ng-repeat="arr in items track by $index" ng-init="$rowIndex = $index")
 				md-toolbar(layout="row" layout-align="center center") {{titles[$index]}}
 				md-content(ng-class="addClass($rowIndex)")
