@@ -10,9 +10,11 @@
 				.backgroundPalette('grey');
 		})
 		// menu options including logout, add task
-		.controller('MenuCtrl', function($rootScope, $scope, $mdDialog) {
+		.controller('MenuCtrl', function($rootScope, $scope, $mdDialog, $mdMedia) {
 			$scope.isOpen = false;
 			$scope.icon = 'menu';
+			$scope.sortType = 'label';
+
 			$scope.Logout = function() {
 				firebase.auth().signOut().then(function() {
 					location.pathname = "/login";
@@ -21,16 +23,26 @@
 				});
 			};
 			$scope.TaskDialog = function(event) {
-				$mdDialog.show({
-					contentElement: '#create_task',
-					parent: angular.element(document.body),
-					targetEvent: event,
-					clickOutsideToClose: true,
-					fullscreen: true
-				});
+				if ($scope.isOpen){
+					$mdDialog.show({
+						contentElement: '#create_task',
+						parent: angular.element(document.body),
+						targetEvent: event,
+						clickOutsideToClose: true,
+						fullscreen: true
+					});
+				}
 			};
-
-			$scope.sortType = 'label';
+			$scope.Enter = function(){
+				if (!$mdMedia('xs'))
+					$scope.isOpen = true;
+				$scope.icon = 'create';
+			};
+			$scope.Leave = function(){
+				if (!$mdMedia('xs'))
+					$scope.isOpen = false;
+				$scope.icon = 'menu';
+			};
 			$scope.Sort = function(){
 				$rootScope.$broadcast('ChangeSort', {
 					type: $scope.sortType
@@ -38,6 +50,7 @@
 				if ($scope.sortType == 'date')
 					$scope.sortType = 'label';
 				else $scope.sortType = 'date';
+				$scope.Leave();
 			};
 		})
 

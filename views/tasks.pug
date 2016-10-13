@@ -6,12 +6,11 @@ block content
 			Menu Button
 	//- ------------------ -//
 	div(ng-controller="MenuCtrl")
-		md-fab-speed-dial(md-open="MenuCtrl.isOpen" ng-mouseenter="MenuCtrl.isOpen=true; icon='create'"
-		ng-mouseleave="MenuCtrl.isOpen=false; icon='menu'"
-		md-direction="up" class="md-scale md-fab-bottom-right")
+		md-fab-speed-dial(md-open="isOpen" md-direction="up" class="md-scale md-fab-bottom-right"
+		ng-mouseenter="Enter()" ng-mouseleave="Leave()")
 			md-fab-trigger
 				md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog($event)")
-					md-icon(md-font-library="material-icons" ng-bind="icon")
+					md-icon(md-font-library="material-icons" ng-bind="icon" id="rotate")
 					md-tooltip(md-direction="left") New Task
 			md-fab-actions
 				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn")
