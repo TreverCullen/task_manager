@@ -96,6 +96,8 @@ function($rootScope, $scope, $mdDialog){
 		return days[date.getDay()] + ', ' + date.getDate() + ' '
 		+ mos[date.getMonth()] + ' ' + date.getFullYear();
 	};
+
+	// move or delete the task
 	$scope.MoveTask = function(event, key, val){
 		var user = firebase.auth().currentUser;
 		if (user){
@@ -122,6 +124,8 @@ function($rootScope, $scope, $mdDialog){
 			console.log('Task ' + key + ' has been deleted');
 		});
 	};
+
+	// broadcast up to rootscope to pass to other controller
 	$scope.UpdateTask = function(event, key, title, label, date, desc){
 		$mdDialog.show({
 			contentElement: '#update_task',
@@ -138,6 +142,8 @@ function($rootScope, $scope, $mdDialog){
 			desc: desc
 		});
 	};
+
+	// add padding to bottom of last column
 	$scope.addClass = function(col){
 		if (col == 2)
 			return 'pad';
