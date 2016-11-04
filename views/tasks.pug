@@ -10,12 +10,15 @@ block content
 		ng-mouseenter="Enter()" ng-mouseleave="Leave()")
 			md-fab-trigger
 				md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog($event)")
-					md-icon(md-font-library="material-icons" ng-bind="icon" id="rotate")
+					md-icon(md-font-library="material-icons" ng-bind="icon")
 					md-tooltip(md-direction="left") New Task
 			md-fab-actions
 				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn")
 					md-icon(md-font-library="material-icons" ng-click="Sort()") swap_vert
 					md-tooltip(md-direction="left") Change Sort
+				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn")
+					md-icon(md-font-library="material-icons" ng-click="ListBoardDialog($event)") list
+					md-tooltip(md-direction="left") List Boards
 				md-button(aria-label="logout" class="md-fab md-raised md-mini md-warn")
 					md-icon(md-font-library="material-icons" ng-click="Logout()") exit_to_app
 					md-tooltip(md-direction="left") Logout
@@ -92,6 +95,56 @@ block content
 								md-button(ng-click="submit()") Save
 
 	//- ------------------ -//
+	//- Create Board Dialog
+	//- ------------------ -//
+	div(ng-controller="SubmitBoardCtrl")
+		div(style="visibility: hidden")
+			div(class="md-dialog-container" id="create_board")
+				md-dialog(layout-padding aria-label="Create Board")
+					md-dialog-content(layout-padding layout="column")
+						div(layout="row" layout-align="space-between center")
+							h4 Create Board
+							p(ng-init="error = false" ng-if="error == true"
+							style="color: red; size: .5em") * All Fields Required
+						div(layout="row")
+							md-input-container(flex)
+								label Title
+								input(ng-model="title")
+						div(layout="row")
+							md-input-container(flex)
+								label Description
+								textarea(ng-model="desc")
+
+					md-dialog-actions
+						md-button(ng-click="cancel()") Cancel
+						md-button(ng-click="submit()") Submit
+
+	//- ------------------ -//
+	//- List Board Dialog
+	//- ------------------ -//
+	div(ng-controller="BoardCtrl")
+		div(style="visibility: hidden")
+			div(class="md-dialog-container" id="list_board")
+				md-dialog(layout-padding aria-label="Create Board")
+					md-dialog-content(layout-padding layout="column")
+						h4 Change Boards
+						md-list(flex)
+							md-list-item(class="secondary-button-padding"
+							ng-click="selectBoard(board.key)"
+							ng-repeat="board in items track by $index")
+								p {{board.title}}
+								md-button(class="md-secondary" class="md-icon-button"
+								ng-click="$event.stopPropagation()")
+									md-icon(md-font-library="material-icons") settings
+
+					md-dialog-actions
+						md-button(ng-click="cancel()") Cancel
+						md-button(class="md-icon-button"
+						ng-click="BoardDialog($event)")
+							md-icon(md-font-library="material-icons") add
+
+
+	//- ------------------ -//
 			  Tasks
 	//- ------------------ -//
 	div(ng-controller="TaskCtrl" class="mobile_container")
@@ -121,3 +174,6 @@ block script
 	script(src="ctrl_submit.js")
 	script(src="ctrl_task.js")
 	script(src="ctrl_update.js")
+
+	script(src="ctrl_board_submit.js")
+	script(src="ctrl_board_boards.js")

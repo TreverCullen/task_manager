@@ -23,6 +23,17 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 			});
 		}
 	};
+	$scope.ListBoardDialog = function(event) {
+		if ($scope.isOpen){
+			$mdDialog.show({
+				contentElement: '#list_board',
+				parent: angular.element(document.body),
+				targetEvent: event,
+				clickOutsideToClose: true,
+				fullscreen: true
+			});
+		}
+	};
 	$scope.Enter = function(){
 		if (!$mdMedia('xs'))
 			$scope.isOpen = true;

@@ -16,14 +16,18 @@ function($scope, $mdDialog){
 		else{
 			var user = firebase.auth().currentUser;
 			if (user){
-				var ref = firebase.database().ref(user.uid).child($scope.key);
-				ref.update({
-					title: $scope.title,
-					label: $scope.label,
-					due: $scope.date.getTime(),
-					desc: $scope.desc
+				var parentRef = firebase.database().ref('users/' + user.uid);
+				parentRef.once('value', function(snap){
+					var board = snap.val().current;
+					var ref = firebase.database().ref('tasks/' + board).child($scope.key);
+					ref.update({
+						title: $scope.title,
+						label: $scope.label,
+						due: $scope.date.getTime(),
+						desc: $scope.desc
+					});
+					$scope.cancel();
 				});
-				$scope.cancel();
 			}
 		}
 	};
@@ -38,9 +42,13 @@ function($scope, $mdDialog){
 	$scope.RefreshTask = function(){
 		var user = firebase.auth().currentUser;
 		if (user){
-			var ref = firebase.database().ref(user.uid).child($scope.key);
-			ref.update({ stage: 0 });
-			$scope.cancel();
+			var parentRef = firebase.database().ref('users/' + user.uid);
+			parentRef.once('value', function(snap){
+				var board = snap.val().current;
+				var ref = firebase.database().ref('tasks/' + board).child($scope.key);
+				ref.update({ stage: 0 });
+				$scope.cancel();
+			});
 		}
 	};
 });

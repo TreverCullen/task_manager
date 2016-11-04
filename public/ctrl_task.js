@@ -4,82 +4,57 @@ function($rootScope, $scope, $mdDialog){
 	$scope.titles = ['Upcoming','In Progress','Done'];
 	$scope.icons = ['forward','done','delete'];
 	$scope.icon_names = ['Start','Done','Delete'];
+	$scope.currentBoard = null;
 
-	// load and refresh tasks
+	////////////////////////////
+	// load and refresh tasks //
+	////////////////////////////
 	firebase.auth().onAuthStateChanged(function(user){
-		$scope.items = [[],[],[]];
 		if(user) {
-			var ref = firebase.database().ref(user.uid);
-			ref.off();	// detach old listeners from previous sesions
-			ref.on('child_added', function(snapshot){
-				var val = snapshot.val();
-				var item = {
-					title: val.title,
-					desc: val.desc,
-					due: DateDiff(val.due),
-					label: val.label,
-					key: snapshot.key,
-					date: val.due
-				};
-				$scope.items[val.stage].push(item);
-				$scope.items[val.stage].sort(compFunc);
-				$scope.$apply();
-			});
-			ref.on('child_changed', function(snapshot){
-				var val = snapshot.val();
-				var loc = val.stage;
-				// normal update
-				for (var i = 0; i < $scope.items[loc].length; i++){
-					if ($scope.items[loc][i].key == snapshot.key){
-						var item = {
-							title: val.title,
-							desc: val.desc,
-							due: DateDiff(val.due),
-							date: val.due,
-							label: val.label,
-							key: snapshot.key
-						};
-						$scope.items[loc][i] = item;
-						$scope.items[loc].sort(compFunc);
-						$scope.$apply();
-						return;
+			var parentRef = firebase.database().ref('users/' + user.uid);
+			parentRef.off();
+			parentRef.child('current').on('value', parentCallBack);
+
+			function parentCallBack(snapshot){
+				$scope.currentBoard = snapshot.val();
+				// need to do some check here if someone doesn't have any boards
+				var ref = firebase.database().ref('tasks/' + $scope.currentBoard)
+				ref.off();	// detach old listeners from previous sesions
+				ref.on('value', function(snap){
+					$scope.items = [[],[],[]];
+					var val = snap.val();
+					if (val){
+						var len = Object.keys(val).length;
+						var count = 0;
+						Object.keys(val).forEach(function(key) {
+							var data = val[key];
+							$scope.items[data.stage].push({
+								title: data.title,
+								desc: data.desc,
+								due: DateDiff(data.due),
+								label: data.label,
+								key: key,
+								date: data.due
+							});
+							count++;
+							if (count == len && !$scope.$$phase)
+								$scope.$apply();
+						});
 					}
-				}
-				// move
-				if (loc > 0){
-					for (var i = 0; i < $scope.items[loc - 1].length; i++){
-						if ($scope.items[loc - 1][i].key == snapshot.key){
-							$scope.items[loc].push($scope.items[loc - 1][i]);
-							$scope.items[loc - 1].splice(i, 1);
-							$scope.items[loc].sort(compFunc);
-							$scope.$apply();
-							return;
-						}
-					}
-				}
-				// refresh (back to upcoming)
-				else{ for (; loc < 3; loc++){
-					for (var i = 0; i < $scope.items[loc].length; i++){
-						if ($scope.items[loc][i].key == snapshot.key){
-							$scope.items[0].push($scope.items[loc][i]);
-							$scope.items[loc].splice(i, 1);
-							$scope.items[0].sort(compFunc);
-							$scope.$apply();
-							return;
-						}
-					}
-				}}
-			});
+					else $scope.$apply();
+				});
+			}
 		}
 	});
 
-	// for sorting
+	/////////////////
+	// for sorting //
+	/////////////////
 	$scope.sortType = 'date';
 	$scope.$on('ChangeSort', function(event, data){
 		$scope.sortType = data.type;
 		for (var i = 0; i < 3; i++)
 			$scope.items[i].sort(compFunc);
-		$scope.$apply();
 	});
 	function compFunc(a, b){
 		if ($scope.sortType == 'label' && a.label != b.label){
@@ -97,11 +72,14 @@ function($rootScope, $scope, $mdDialog){
 		+ mos[date.getMonth()] + ' ' + date.getFullYear();
 	};
 
-	// move or delete the task
+	/////////////////////////////
+	// move or delete the task //
+	/////////////////////////////
 	$scope.MoveTask = function(event, key, val){
 		var user = firebase.auth().currentUser;
 		if (user){
-			var ref = firebase.database().ref(user.uid).child(key);
+			var board = $scope.currentBoard;
+			var ref = firebase.database().ref('tasks/' + board).child(key);
 			if (val < 2) ref.update({ stage: val + 1 });
 			else DeleteTask(event, ref, key);
 		}
@@ -125,7 +103,9 @@ function($rootScope, $scope, $mdDialog){
 		});
 	};
 
-	// broadcast up to rootscope to pass to other controller
+	///////////////////////////////////////////////////////////
+	// broadcast up to rootscope to pass to other controller //
+	///////////////////////////////////////////////////////////
 	$scope.UpdateTask = function(event, key, title, label, date, desc){
 		$mdDialog.show({
 			contentElement: '#update_task',
@@ -143,7 +123,9 @@ function($rootScope, $scope, $mdDialog){
 		});
 	};
 
-	// add padding to bottom of last column
+	//////////////////////////////////////////
+	// add padding to bottom of last column //
+	//////////////////////////////////////////
 	$scope.addClass = function(col){
 		if (col == 2)
 			return 'pad';

@@ -3,23 +3,38 @@ angular.module('TaskApp').controller('SubmitTaskCtrl',
 function($scope, $mdDialog){
 	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
 	$scope.submit = function(){
-		if (!$scope.title || !$scope.desc
-			|| !$scope.date || !$scope.label)
+		var data = {
+			title: $scope.title,
+			desc: $scope.desc,
+			date: $scope.date,
+			label: $scope.label
+		}
+		if (!data.title || !data.desc
+			|| !data.date || !data.label)
 			$scope.error = true;
 		else{
 			var user = firebase.auth().currentUser;
 			if (user){
-				firebase.database().ref(user.uid).push({
-					title: $scope.title,
-					due: $scope.date.getTime(),
-					desc: $scope.desc,
-					label: $scope.label,
-					stage: 0
+				var ref = firebase.database().ref('users/' + user.uid);
+				ref.once('value', function(snapshot){
+					callBack(snapshot.val().current);
 				});
 			}
 			$scope.cancel();
 		}
+		function callBack(board){
+			if (board){
+				firebase.database().ref('tasks/' + board).push({
+					title: data.title,
+					due: data.date.getTime(),
+					desc: data.desc,
+					label: data.label,
+					stage: 0
+				});
+			}
+		};
 	};
+
 	// cancel task and clear form
 	$scope.cancel = function(){
 		$mdDialog.hide();
