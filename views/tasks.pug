@@ -13,14 +13,17 @@ block content
 					md-icon(md-font-library="material-icons" ng-bind="icon")
 					md-tooltip(md-direction="left") New Task
 			md-fab-actions
-				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn")
-					md-icon(md-font-library="material-icons" ng-click="Sort()") swap_vert
+				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
+				ng-click="Sort()")
+					md-icon(md-font-library="material-icons") swap_vert
 					md-tooltip(md-direction="left") Change Sort
-				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn")
-					md-icon(md-font-library="material-icons" ng-click="ListBoardDialog($event)") list
+				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
+				ng-click="ListBoardDialog($event)")
+					md-icon(md-font-library="material-icons") list
 					md-tooltip(md-direction="left") List Boards
-				md-button(aria-label="logout" class="md-fab md-raised md-mini md-warn")
-					md-icon(md-font-library="material-icons" ng-click="Logout()") exit_to_app
+				md-button(aria-label="logout" class="md-fab md-raised md-mini md-warn"
+				ng-click="Logout()")
+					md-icon(md-font-library="material-icons") exit_to_app
 					md-tooltip(md-direction="left") Logout
 
 	//- ------------------ -//
