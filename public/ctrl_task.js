@@ -1,10 +1,29 @@
 // Load, Move, Delete, Edit Tasks
 angular.module('TaskApp').controller('TaskCtrl',
-function($rootScope, $scope, $mdDialog){
+function($rootScope, $scope, $mdDialog, $mdToast){
 	$scope.titles = ['Upcoming','In Progress','Done'];
 	$scope.icons = ['forward','done','delete'];
 	$scope.icon_names = ['Start','Done','Delete'];
 	$scope.currentBoard = null;
+
+	////////////////////////
+	// board notification //
+	////////////////////////
+	$scope.$watch('currentBoard', function(){
+		var user = firebase.auth().currentUser;
+		if (user){
+			var ref = firebase.database().ref('boards/' + $scope.currentBoard);
+			ref.once('value', function(snap){
+				var title = snap.val().title;
+				$mdToast.show(
+					$mdToast.simple()
+					.textContent('Current Board: ' + title)
+					.position('bottom left')
+					.hideDelay(3000)
+			    );
+			});
+		}
+	});
 
 	////////////////////////////
 	// load and refresh tasks //
@@ -57,7 +76,7 @@ function($rootScope, $scope, $mdDialog){
 			$scope.items[i].sort(compFunc);
 	});
 	function compFunc(a, b){
-		if ($scope.sortType == 'label' && a.label != b.label){
+		if (a.date == b.date || ($scope.sortType == 'label' && a.label != b.label)){
 			var l = ["Red","Orange","Yellow","Green","Blue","Purple","None"];
 			return l.indexOf(a.label) - l.indexOf(b.label);
 		}
@@ -111,8 +130,7 @@ function($rootScope, $scope, $mdDialog){
 			contentElement: '#update_task',
 			parent: angular.element(document.body),
 			targetEvent: event,
-			clickOutsideToClose: true,
-			fullscreen: true
+			clickOutsideToClose: true
 		});
 		$rootScope.$broadcast('UpdateData', {
 			key: key,

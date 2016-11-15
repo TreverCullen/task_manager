@@ -18,8 +18,7 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 				contentElement: '#create_task',
 				parent: angular.element(document.body),
 				targetEvent: event,
-				clickOutsideToClose: true,
-				fullscreen: true
+				clickOutsideToClose: true
 			});
 		}
 	};
@@ -29,8 +28,7 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 				contentElement: '#list_board',
 				parent: angular.element(document.body),
 				targetEvent: event,
-				clickOutsideToClose: true,
-				fullscreen: true
+				clickOutsideToClose: true
 			});
 		}
 	};
