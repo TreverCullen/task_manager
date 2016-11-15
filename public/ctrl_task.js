@@ -55,6 +55,7 @@ function($rootScope, $scope, $mdDialog, $mdToast){
 								key: key,
 								date: data.due
 							});
+							$scope.items[data.stage].sort(compFunc);
 							count++;
 							if (count == len && !$scope.$$phase)
 								$scope.$apply();
@@ -76,7 +77,7 @@ function($rootScope, $scope, $mdDialog, $mdToast){
 			$scope.items[i].sort(compFunc);
 	});
 	function compFunc(a, b){
-		if (a.date == b.date || ($scope.sortType == 'label' && a.label != b.label)){
+		if ($scope.sortType == 'label' && a.label != b.label){
 			var l = ["Red","Orange","Yellow","Green","Blue","Purple","None"];
 			return l.indexOf(a.label) - l.indexOf(b.label);
 		}
