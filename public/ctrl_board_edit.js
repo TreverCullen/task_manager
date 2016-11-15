@@ -15,20 +15,18 @@ function($scope, $mdDialog, $mdToast){
 					title: $scope.title,
 					desc: $scope.desc
 				});
-				$mdDialog.show({
-					contentElement: '#list_board',
-					parent: angular.element(document.body),
-					targetEvent: event,
-					clickOutsideToClose: true
-				});
+				$scope.cancel();
 			}
 		}
 	};
 	// cancel task and clear form
 	$scope.cancel = function(){
-		$mdDialog.hide();
-		$scope.title = null;
-		$scope.desc = null;
+		$mdDialog.show({
+			contentElement: '#list_board',
+			parent: angular.element(document.body),
+			targetEvent: event,
+			clickOutsideToClose: true
+		});
 	};
 
 	$scope.DeleteBoard = function(){
