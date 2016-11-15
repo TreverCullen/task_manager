@@ -1,5 +1,5 @@
 angular.module('TaskApp').controller('EditBoardCtrl',
-function($scope, $mdDialog){
+function($scope, $mdDialog, $mdToast){
 	$scope.$on('UpdateBoard', function(event, data){
 		$scope.title = data.title;
 		$scope.desc = data.desc;
@@ -32,6 +32,11 @@ function($scope, $mdDialog){
 	};
 
 	$scope.DeleteBoard = function(){
-		console.log($scope.key);
+		$mdToast.show(
+			$mdToast.simple()
+			.textContent('Not Available')
+			.position('bottom left')
+			.hideDelay(3000)
+		);
 	};
 });
