@@ -29,43 +29,47 @@ function($rootScope, $scope, $mdDialog, $mdToast){
 	// load and refresh tasks //
 	////////////////////////////
 	firebase.auth().onAuthStateChanged(function(user){
-		if(user) {
+		if (user) {
 			var parentRef = firebase.database().ref('users/' + user.uid);
 			parentRef.off();
-			parentRef.child('current').on('value', parentCallBack);
-
-			function parentCallBack(snapshot){
+			parentRef.child('current').on('value', function(snapshot){
 				$scope.currentBoard = snapshot.val();
-				// need to do some check here if someone doesn't have any boards
-				var ref = firebase.database().ref('tasks/' + $scope.currentBoard)
-				ref.off();	// detach old listeners from previous sesions
-				ref.on('value', function(snap){
-					$scope.items = [[],[],[]];
-					var val = snap.val();
-					if (val){
-						var len = Object.keys(val).length;
-						var count = 0;
-						Object.keys(val).forEach(function(key) {
-							var data = val[key];
-							$scope.items[data.stage].push({
-								title: data.title,
-								desc: data.desc,
-								due: DateDiff(data.due),
-								label: data.label,
-								key: key,
-								date: data.due
-							});
-							$scope.items[data.stage].sort(compFunc);
-							count++;
-							if (count == len && !$scope.$$phase)
-								$scope.$apply();
-						});
-					}
-					else $scope.$apply();
-				});
-			}
+				if ($scope.currentBoard == null)
+					$rootScope.$broadcast('NewUser');
+				else LoadTasks();
+			});
 		}
 	});
+
+	function LoadTasks(){
+		// need to do some check here if someone doesn't have any boards
+		var ref = firebase.database().ref('tasks/' + $scope.currentBoard);
+		ref.off();	// detach old listeners from previous sesions
+		ref.on('value', function(snap){
+			$scope.items = [[],[],[]];
+			var val = snap.val();
+			if (val){
+				var len = Object.keys(val).length;
+				var count = 0;
+				Object.keys(val).forEach(function(key) {
+					var data = val[key];
+					$scope.items[data.stage].push({
+						title: data.title,
+						desc: data.desc,
+						due: DateDiff(data.due),
+						label: data.label,
+						key: key,
+						date: data.due
+					});
+					$scope.items[data.stage].sort(compFunc);
+					count++;
+					if (count == len && !$scope.$$phase)
+						$scope.$apply();
+				});
+			}
+			else $scope.$apply();
+		});
+	};
 
 	/////////////////
 	// for sorting //

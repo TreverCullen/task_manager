@@ -32,9 +32,11 @@ function($scope, $mdDialog, $rootScope){
 			ref.on('value', function(snapshot){
 				$scope.boards = [];
 				var val = snapshot.val();
-				Object.keys(val).forEach(function(key) {
-					$scope.boards.push(val[key].reference);
-				});
+				if (val != null){
+					Object.keys(val).forEach(function(key) {
+						$scope.boards.push(val[key].reference);
+					});
+				}
 			});
 		}
 	});

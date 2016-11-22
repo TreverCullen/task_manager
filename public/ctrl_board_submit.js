@@ -1,5 +1,10 @@
 angular.module('TaskApp').controller('SubmitBoardCtrl',
 function($scope, $mdDialog){
+	$scope.$on('NewUser', function(){
+		$scope.title = 'First Board';
+		$scope.desc = 'This is your first board.';
+		$scope.submit();
+	});
 	$scope.submit = function(){
 		if (!$scope.title || !$scope.desc)
 			$scope.error = true;
