@@ -8,20 +8,21 @@ function($scope, $mdDialog){
 			if (user){
 				var key = firebase.database().ref('boards').push({
 					title: $scope.title,
-					desc: $scope.desc,
-					created: new Date()
+					desc: $scope.desc
 				}).key;
+				firebase.database().ref('boards/' + key + '/users').push(user.uid);
 				var ref = firebase.database().ref('users/' + user.uid);
 				ref.child('boards').push({ reference: key });
 				ref.update({ current: key });
 			}
-			$scope.cancel();
+			$mdDialog.hide();
 		}
 	};
-	// cancel task and clear form
+	// reopen board list
 	$scope.cancel = function(){
-		$mdDialog.hide();
-		$scope.title = null;
-		$scope.desc = null;
+		$mdDialog.show({
+			contentElement: '#list_board',
+			parent: angular.element(document.body)
+		});
 	};
 });

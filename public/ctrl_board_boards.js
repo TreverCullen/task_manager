@@ -46,8 +46,7 @@ function($scope, $mdDialog, $rootScope){
 		if ($scope.boards){
 			Object.keys($scope.boards).forEach(function(key) {
 				var ref = firebase.database().ref('boards/' + $scope.boards[key]);
-				ref.off();
-				ref.on('value', function(snapshot){
+				ref.once('value', function(snapshot){
 					var val = snapshot.val();
 					var item = {
 						title: val.title,
