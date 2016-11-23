@@ -55,6 +55,9 @@ function($scope, $mdDialog, $mdToast){
 
 	// reopen board list
 	$scope.cancel = function(){
+		$scope.title = null;
+		$scope.desc = null;
+		$scope.code = null;
 		$mdDialog.show({
 			contentElement: '#list_board',
 			parent: angular.element(document.body)
