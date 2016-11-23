@@ -34,7 +34,7 @@ function($scope, $mdDialog, $rootScope){
 				var val = snapshot.val();
 				if (val != null){
 					Object.keys(val).forEach(function(key) {
-						$scope.boards.push(val[key].reference);
+						$scope.boards.push(val[key]);
 					});
 				}
 			});

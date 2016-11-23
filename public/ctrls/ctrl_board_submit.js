@@ -48,7 +48,7 @@ function($scope, $mdDialog, $mdToast){
 	function addUser(user, key){
 		firebase.database().ref('boards/' + key + '/users').push(user.uid);
 		var ref = firebase.database().ref('users/' + user.uid);
-		ref.child('boards').push({ reference: key });
+		ref.child('boards').push(key);
 		ref.update({ current: key });
 		$mdDialog.hide();
 	}

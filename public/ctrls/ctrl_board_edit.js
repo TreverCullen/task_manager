@@ -89,12 +89,13 @@ function($scope, $mdDialog, $mdToast){
 			// other members of this board
 			else{
 				var confirm = $mdDialog.confirm()
-					.title('Are you sure you want to remove yourself this board?')
+					.title('Are you sure you want to remove yourself from this board?')
 					.textContent('Other members will still have access.')
 					.ok('Yes')
 					.cancel('No');
 				$mdDialog.show(confirm).then(function() {
 					removeFromUser(user);
+					removeFromBoard(user, ref);
 					$mdToast.show(
 						$mdToast.simple()
 						.textContent('Removed Board: ' + $scope.title)
@@ -107,9 +108,20 @@ function($scope, $mdDialog, $mdToast){
 	};
 	function removeFromUser(user){
 		var ref = firebase.database().ref('users/' + user.uid + '/boards');
-		ref.orderByChild('reference').equalTo($scope.key)
-		.once('value', function(snap){
-			ref.child(Object.keys(snap.val())[0]).remove();
+		ref.once('value', function(snap){
+			snap.forEach(function(snapshot){
+				if ($scope.key == snapshot.val())
+					ref.child(snapshot.key).remove();
+			});
+		});
+	}
+	function removeFromBoard(user){
+		var ref = firebase.database().ref('boards/' + $scope.key + '/users');
+		ref.once('value', function(snap){
+			snap.forEach(function(snapshot){
+				if (user.uid == snapshot.val())
+					ref.child(snapshot.key).remove();
+			});
 		});
 	}
 	function fullBoardDelete(){
