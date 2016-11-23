@@ -27,9 +27,22 @@ function($scope, $mdDialog, $mdToast){
 		});
 	};
 
+	/////////////////
+	// SHARE BOARD //
+	/////////////////
+	$scope.ShareBoard = function(){
+		$mdToast.show(
+			$mdToast.simple()
+			.textContent('Share Code: ' + $scope.key)
+			.action('Close')
+			.position('bottom left')
+			.hideDelay(10000)
+		);
+	};
+
 	//////////////////
 	// DELETE BOARD //
-	/////////////////
+	//////////////////
 	$scope.DeleteBoard = function(){
 		var user = firebase.auth().currentUser;
 		if (user){

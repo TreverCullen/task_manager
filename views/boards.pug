@@ -47,6 +47,11 @@ block content
 							md-input-container(flex)
 								label Description
 								textarea(ng-model="desc")
+						p(flex style="text-align: center") OR
+						div(layout="row")
+							md-input-container(flex)
+								label Share Code
+								textarea(ng-model="code")
 
 					md-dialog-actions
 						md-button(ng-click="cancel()") Cancel
@@ -75,9 +80,13 @@ block content
 
 					md-dialog-actions
 						div(layout="row" style="width: 100%" layout-align="space-between center")
-							md-button(class="md-icon-button" ng-click="DeleteBoard()")
-								md-icon(md-font-library="material-icons") delete
-								md-tooltip(md-direction="right") Delete
+							div
+								md-button(class="md-icon-button" ng-click="DeleteBoard()")
+									md-icon(md-font-library="material-icons") delete
+									md-tooltip(md-direction="top") Delete
+								md-button(class="md-icon-button" ng-click="ShareBoard()")
+									md-icon(md-font-library="material-icons") share
+									md-tooltip(md-direction="top") Share Code
 							div
 								md-button(ng-click="cancel()") Cancel
 								md-button(ng-click="submit()") Save
