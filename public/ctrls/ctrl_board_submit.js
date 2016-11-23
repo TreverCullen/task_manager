@@ -28,12 +28,6 @@ function($scope, $mdDialog, $mdToast){
 							.position('bottom left')
 							.hideDelay(3000)
 					    );
-						$mdDialog.show({
-							contentElement: '#create_board',
-							parent: angular.element(document.body),
-							targetEvent: event,
-							clickOutsideToClose: true
-						});
 					}
 				});
 			}
