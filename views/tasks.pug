@@ -1,30 +1,6 @@
-extend base.pug
+extend boards.pug
 
 block content
-
-	//- ------------------ -//
-			Menu Button
-	//- ------------------ -//
-	div(ng-controller="MenuCtrl")
-		md-fab-speed-dial(md-open="isOpen" md-direction="up" class="md-scale md-fab-bottom-right"
-		ng-mouseenter="Enter()" ng-mouseleave="Leave()")
-			md-fab-trigger
-				md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog($event)")
-					md-icon(md-font-library="material-icons" ng-bind="icon")
-					md-tooltip(md-direction="left") New Task
-			md-fab-actions
-				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
-				ng-click="Sort()")
-					md-icon(md-font-library="material-icons") swap_vert
-					md-tooltip(md-direction="left") Change Sort
-				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
-				ng-click="ListBoardDialog($event)")
-					md-icon(md-font-library="material-icons") list
-					md-tooltip(md-direction="left") List Boards
-				md-button(aria-label="logout" class="md-fab md-raised md-mini md-warn"
-				ng-click="Logout()")
-					md-icon(md-font-library="material-icons") exit_to_app
-					md-tooltip(md-direction="left") Logout
 
 	//- ------------------ -//
 		Submit Task Dialog
@@ -97,86 +73,6 @@ block content
 								md-button(ng-click="cancel()") Cancel
 								md-button(ng-click="submit()") Save
 
-	//- ------------------ -//
-	//- List Board Dialog
-	//- ------------------ -//
-	div(ng-controller="BoardCtrl")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="list_board")
-				md-dialog(layout-padding aria-label="Create Board")
-					md-dialog-content(layout-padding layout="column")
-						h4 Change Boards
-						md-list(flex)
-							md-list-item(class="secondary-button-padding"
-							ng-click="selectBoard(board.key)"
-							ng-repeat="board in items track by $index")
-								p {{board.title}}
-								md-button(class="md-secondary" class="md-icon-button"
-								ng-click="EditBoardDialog($event, board.title, board.desc, \
-								board.key); $event.stopPropagation()")
-									md-icon(md-font-library="material-icons") settings
-
-					md-dialog-actions
-						md-button(ng-click="cancel()") Cancel
-						md-button(class="md-icon-button"
-						ng-click="BoardDialog($event)")
-							md-icon(md-font-library="material-icons") add
-
-	//- ------------------ -//
-	//- Create Board Dialog
-	//- ------------------ -//
-	div(ng-controller="SubmitBoardCtrl")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="create_board")
-				md-dialog(layout-padding aria-label="Create Board")
-					md-dialog-content(layout-padding layout="column")
-						div(layout="row" layout-align="space-between center")
-							h4 Create Board
-							p(ng-init="error = false" ng-if="error == true"
-							style="color: red; size: .5em") * All Fields Required
-						div(layout="row")
-							md-input-container(flex)
-								label Title
-								input(ng-model="title")
-						div(layout="row")
-							md-input-container(flex)
-								label Description
-								textarea(ng-model="desc")
-
-					md-dialog-actions
-						md-button(ng-click="cancel()") Cancel
-						md-button(ng-click="submit()") Submit
-
-	//- ------------------ -//
-	//- Edit Board Dialog
-	//- ------------------ -//
-	div(ng-controller="EditBoardCtrl")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="edit_board")
-				md-dialog(layout-padding aria-label="Edit Board")
-					md-dialog-content(layout-padding layout="column")
-						div(layout="row" layout-align="space-between center")
-							h4 Edit Board
-							p(ng-init="error = false" ng-if="error == true"
-							style="color: red; size: .5em") * All Fields Required
-						div(layout="row")
-							md-input-container(flex)
-								label Title
-								input(ng-model="title")
-						div(layout="row")
-							md-input-container(flex)
-								label Description
-								textarea(ng-model="desc")
-
-					md-dialog-actions
-						div(layout="row" style="width: 100%" layout-align="space-between center")
-							md-button(class="md-icon-button" ng-click="DeleteBoard()")
-								md-icon(md-font-library="material-icons") delete
-								md-tooltip(md-direction="right") Delete
-							div
-								md-button(ng-click="cancel()") Cancel
-								md-button(ng-click="submit()") Save
-
 
 	//- ------------------ -//
 			  Tasks
@@ -203,12 +99,6 @@ block content
 
 
 block script
-	script(src="module.js")
-	script(src="ctrl_menu.js")
-	script(src="ctrl_submit.js")
-	script(src="ctrl_task.js")
-	script(src="ctrl_update.js")
-
-	script(src="ctrl_board_boards.js")
-	script(src="ctrl_board_submit.js")
-	script(src="ctrl_board_edit.js")
+	script(src="ctrls/ctrl_task_submit.js")
+	script(src="ctrls/ctrl_task_tasks.js")
+	script(src="ctrls/ctrl_task_update.js")
