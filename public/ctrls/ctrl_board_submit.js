@@ -1,8 +1,9 @@
 angular.module('TaskApp').controller('SubmitBoardCtrl',
 function($scope, $mdDialog, $mdToast){
 	$scope.$on('NewUser', function(){
-		$scope.title = 'First';
-		$scope.desc = 'This is your first board :)';
+		$scope.newUser = true;
+		$scope.title = "Hello ";
+		$scope.desc = 'Welcome to Tasqer!';
 		$scope.submit();
 	});
 	$scope.submit = function(){
@@ -13,6 +14,7 @@ function($scope, $mdDialog, $mdToast){
 				ref.once('value', function(snapshot){
 					var val = snapshot.val();
 					var count = 0;
+					// check if board exists
 					Object.keys(val).forEach(function(key){
 						if (key == $scope.code){
 							addUser(user, key);
@@ -26,7 +28,7 @@ function($scope, $mdDialog, $mdToast){
 							.textContent('That board doesn\'t exist.')
 							.position('bottom left')
 							.hideDelay(3000)
-					    );
+						);
 					}
 				});
 			}
@@ -36,6 +38,11 @@ function($scope, $mdDialog, $mdToast){
 		else{
 			var user = firebase.auth().currentUser;
 			if (user){
+				if ($scope.newUser){
+					$scope.title += user.displayName;
+					$scope.newUser = false;
+				}
+				console.log($scope.title);
 				var key = firebase.database().ref('boards').push({
 					title: $scope.title,
 					desc: $scope.desc
@@ -45,10 +52,36 @@ function($scope, $mdDialog, $mdToast){
 		}
 	};
 	function addUser(user, key){
-		firebase.database().ref('boards/' + key + '/users').push(user.uid);
 		var ref = firebase.database().ref('users/' + user.uid);
+		ref.once('value', function(snap){
+			var v = snap.val();
+			if (v){
+				var val = v.boards;
+				var count = 0;
+				// check if user already a member
+				Object.keys(val).forEach(function(k){
+					if (val[k] == key){
+						$mdToast.show(
+							$mdToast.simple()
+							.textContent('You are already a member of that board.')
+							.position('bottom left')
+							.hideDelay(3000)
+						);
+						return;
+					}
+					count++;
+				});
+				if (count == Object.keys(val).length)
+					pushUser(user, key, ref);
+			}
+			else pushUser(user, key, ref);
+		});
+	}
+
+	function pushUser(user, key, ref){
 		ref.child('boards').push(key);
 		ref.update({ current: key });
+		firebase.database().ref('boards/' + key + '/users').push(user.uid);
 		$mdDialog.hide();
 	}
 
