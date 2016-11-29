@@ -131,11 +131,6 @@ function($rootScope, $scope, $mdDialog, $mdToast){
 	// broadcast up to rootscope to pass to other controller //
 	///////////////////////////////////////////////////////////
 	$scope.UpdateTask = function(key, title, label, date, desc){
-		$mdDialog.show({
-			contentElement: '#update_task',
-			parent: angular.element(document.body),
-			clickOutsideToClose: true
-		});
 		$rootScope.$broadcast('UpdateData', {
 			key: key,
 			title: title,

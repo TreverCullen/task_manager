@@ -15,11 +15,6 @@ function($scope, $mdDialog, $rootScope){
 			title: title,
 			desc: desc
 		});
-		$mdDialog.show({
-			contentElement: '#edit_board',
-			parent: angular.element(document.body),
-			clickOutsideToClose: true
-		});
 	};
 
 	// create board

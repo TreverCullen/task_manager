@@ -4,6 +4,11 @@ function($scope, $mdDialog, $mdToast){
 		$scope.title = data.title;
 		$scope.desc = data.desc;
 		$scope.key = data.key;
+		$mdDialog.show({
+			contentElement: '#edit_board',
+			parent: angular.element(document.body),
+			clickOutsideToClose: true
+		});
 	});
 	$scope.submit = function(key){
 		if (!$scope.title || !$scope.desc)

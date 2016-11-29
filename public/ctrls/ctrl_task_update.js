@@ -6,6 +6,11 @@ function($scope, $mdDialog){
 		$scope.date = new Date(data.date);
 		$scope.desc = data.desc;
 		$scope.key = data.key;
+		$mdDialog.show({
+			contentElement: '#update_task',
+			parent: angular.element(document.body),
+			clickOutsideToClose: true
+		});
 	});
 	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
 

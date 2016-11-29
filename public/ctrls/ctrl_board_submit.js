@@ -1,8 +1,8 @@
 angular.module('TaskApp').controller('SubmitBoardCtrl',
 function($scope, $mdDialog, $mdToast){
 	$scope.$on('NewUser', function(){
-		$scope.title = 'First Board';
-		$scope.desc = 'This is your first board.';
+		$scope.title = 'First';
+		$scope.desc = 'This is your first board :)';
 		$scope.submit();
 	});
 	$scope.submit = function(){
