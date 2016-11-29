@@ -15,17 +15,19 @@ block content
 							md-list-item(class="secondary-button-padding"
 							ng-click="selectBoard(board.key)"
 							ng-repeat="board in items track by $index")
-								p {{board.title}}
+								p {{board.title}}#[br]#[i {{board.desc}}]
 								md-button(class="md-secondary" class="md-icon-button"
 								ng-click="EditBoardDialog($event, board.title, board.desc, \
 								board.key); $event.stopPropagation()")
 									md-icon(md-font-library="material-icons") settings
 
 					md-dialog-actions
-						md-button(ng-click="cancel()") Cancel
-						md-button(class="md-icon-button"
-						ng-click="BoardDialog($event)")
+						md-button(ng-click="cancel()" class="md-icon-button")
+							md-icon(md-font-library="material-icons") clear
+							md-tooltip(md-direction="top") Cancel
+						md-button(ng-click="BoardDialog($event)" class="md-icon-button")
 							md-icon(md-font-library="material-icons") add
+							md-tooltip(md-direction="top") New
 
 	//- ------------------ -//
 	//- Create Board Dialog
@@ -36,7 +38,7 @@ block content
 				md-dialog(layout-padding aria-label="Create Board")
 					md-dialog-content(layout-padding layout="column")
 						div(layout="row" layout-align="space-between center")
-							h4 Create Board
+							h4 Add Board
 							p(ng-init="error = false" ng-if="error == true"
 							style="color: red; size: .5em") * All Fields Required
 						div(layout="row")
@@ -54,8 +56,12 @@ block content
 								textarea(ng-model="code")
 
 					md-dialog-actions
-						md-button(ng-click="cancel()") Cancel
-						md-button(ng-click="submit()") Submit
+						md-button(ng-click="cancel()" class="md-icon-button")
+							md-icon(md-font-library="material-icons") clear
+							md-tooltip(md-direction="top") Cancel
+						md-button(ng-click="submit()" class="md-icon-button")
+							md-icon(md-font-library="material-icons") save
+							md-tooltip(md-direction="top") Save
 
 	//- ------------------ -//
 	//- Edit Board Dialog
@@ -88,8 +94,12 @@ block content
 									md-icon(md-font-library="material-icons") share
 									md-tooltip(md-direction="top") Share Code
 							div
-								md-button(ng-click="cancel()") Cancel
-								md-button(ng-click="submit()") Save
+								md-button(ng-click="cancel()" class="md-icon-button")
+									md-icon(md-font-library="material-icons") clear
+									md-tooltip(md-direction="top") Cancel
+								md-button(ng-click="submit()" class="md-icon-button")
+									md-icon(md-font-library="material-icons") save
+									md-tooltip(md-direction="top") Save
 
 	block content
 

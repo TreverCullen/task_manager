@@ -37,7 +37,7 @@ function($scope, $mdDialog, $mdToast){
 		$mdToast.show(
 			$mdToast.simple()
 			.textContent('Share Code: ' + $scope.key)
-			.action('Close')
+			.action('X')
 			.position('bottom left')
 			.hideDelay(10000)
 		);

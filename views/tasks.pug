@@ -32,8 +32,12 @@ block content
 								textarea(ng-model="desc")
 
 					md-dialog-actions
-						md-button(ng-click="cancel()") Cancel
-						md-button(ng-click="submit()") Submit
+						md-button(ng-click="cancel()" class="md-icon-button")
+							md-icon(md-font-library="material-icons") clear
+							md-tooltip(md-direction="top") Cancel
+						md-button(ng-click="submit()" class="md-icon-button")
+							md-icon(md-font-library="material-icons") save
+							md-tooltip(md-direction="top") Save
 
 	//- ------------------ -//
 		Update Task Dialog
@@ -70,8 +74,12 @@ block content
 								md-icon(md-font-library="material-icons") refresh
 								md-tooltip(md-direction="right") Move to Upcoming
 							div
-								md-button(ng-click="cancel()") Cancel
-								md-button(ng-click="submit()") Save
+								md-button(ng-click="cancel()" class="md-icon-button")
+									md-icon(md-font-library="material-icons") clear
+									md-tooltip(md-direction="top") Cancel
+								md-button(ng-click="submit()" class="md-icon-button")
+									md-icon(md-font-library="material-icons") save
+									md-tooltip(md-direction="top") Save
 
 
 	//- ------------------ -//
