@@ -21,7 +21,6 @@ function($scope, $mdDialog, $mdToast){
 						count++;
 					});
 					if (count == Object.keys(val).length){
-						$mdDialog.hide();
 						$mdToast.show(
 							$mdToast.simple()
 							.textContent('That board doesn\'t exist.')
@@ -60,7 +59,8 @@ function($scope, $mdDialog, $mdToast){
 		$scope.code = null;
 		$mdDialog.show({
 			contentElement: '#list_board',
-			parent: angular.element(document.body)
+			parent: angular.element(document.body),
+			clickOutsideToClose: true
 		});
 	};
 });

@@ -17,7 +17,7 @@ block content
 							ng-repeat="board in items track by $index")
 								p {{board.title}}#[br]#[i {{board.desc}}]
 								md-button(class="md-secondary" class="md-icon-button"
-								ng-click="EditBoardDialog($event, board.title, board.desc, \
+								ng-click="EditBoardDialog(board.title, board.desc, \
 								board.key); $event.stopPropagation()")
 									md-icon(md-font-library="material-icons") settings
 
@@ -25,9 +25,9 @@ block content
 						md-button(ng-click="cancel()" class="md-icon-button")
 							md-icon(md-font-library="material-icons") clear
 							md-tooltip(md-direction="top") Cancel
-						md-button(ng-click="BoardDialog($event)" class="md-icon-button")
+						md-button(ng-click="BoardDialog()" class="md-icon-button")
 							md-icon(md-font-library="material-icons") add
-							md-tooltip(md-direction="top") New
+							md-tooltip(md-direction="top") Add
 
 	//- ------------------ -//
 	//- Create Board Dialog
@@ -49,11 +49,11 @@ block content
 							md-input-container(flex)
 								label Description
 								textarea(ng-model="desc")
-						p(flex style="text-align: center") OR
+						p(flex style="text-align: center; margin: -10px") OR
 						div(layout="row")
 							md-input-container(flex)
 								label Share Code
-								textarea(ng-model="code")
+								input(ng-model="code")
 
 					md-dialog-actions
 						md-button(ng-click="cancel()" class="md-icon-button")

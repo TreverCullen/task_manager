@@ -2,15 +2,14 @@
 angular.module('TaskApp').controller('BoardCtrl',
 function($scope, $mdDialog, $rootScope){
 
-	$scope.BoardDialog = function(event) {
+	$scope.BoardDialog = function() {
 		$mdDialog.show({
 			contentElement: '#create_board',
 			parent: angular.element(document.body),
-			targetEvent: event,
 			clickOutsideToClose: true
 		});
 	};
-	$scope.EditBoardDialog = function(event, title, desc, key) {
+	$scope.EditBoardDialog = function(title, desc, key) {
 		$rootScope.$broadcast('UpdateBoard', {
 			key: key,
 			title: title,
@@ -19,7 +18,6 @@ function($scope, $mdDialog, $rootScope){
 		$mdDialog.show({
 			contentElement: '#edit_board',
 			parent: angular.element(document.body),
-			targetEvent: event,
 			clickOutsideToClose: true
 		});
 	};

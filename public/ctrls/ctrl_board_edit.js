@@ -26,7 +26,8 @@ function($scope, $mdDialog, $mdToast){
 		$scope.key = null;
 		$mdDialog.show({
 			contentElement: '#list_board',
-			parent: angular.element(document.body)
+			parent: angular.element(document.body),
+			clickOutsideToClose: true
 		});
 	};
 
