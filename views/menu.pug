@@ -9,7 +9,7 @@ block content
 		md-fab-speed-dial(md-open="isOpen" md-direction="up" class="md-scale md-fab-bottom-right"
 		ng-mouseenter="Enter()" ng-mouseleave="Leave()")
 			md-fab-trigger
-				md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog($event)")
+				md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog()")
 					md-icon(md-font-library="material-icons" ng-bind="icon")
 					md-tooltip(md-direction="left") New Task
 			md-fab-actions
@@ -18,7 +18,7 @@ block content
 					md-icon(md-font-library="material-icons") swap_vert
 					md-tooltip(md-direction="left") Change Sort
 				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
-				ng-click="ListBoardDialog($event)")
+				ng-click="ListBoardDialog()")
 					md-icon(md-font-library="material-icons") list
 					md-tooltip(md-direction="left") List Boards
 				md-button(aria-label="logout" class="md-fab md-raised md-mini md-warn"

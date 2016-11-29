@@ -12,22 +12,20 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 			alert(error.message);
 		});
 	};
-	$scope.TaskDialog = function(event) {
+	$scope.TaskDialog = function() {
 		if ($scope.isOpen){
 			$mdDialog.show({
 				contentElement: '#create_task',
 				parent: angular.element(document.body),
-				targetEvent: event,
 				clickOutsideToClose: true
 			});
 		}
 	};
-	$scope.ListBoardDialog = function(event) {
+	$scope.ListBoardDialog = function() {
 		if ($scope.isOpen){
 			$mdDialog.show({
 				contentElement: '#list_board',
 				parent: angular.element(document.body),
-				targetEvent: event,
 				clickOutsideToClose: true
 			});
 		}

@@ -99,7 +99,7 @@ function($rootScope, $scope, $mdDialog, $mdToast){
 	/////////////////////////////
 	// move or delete the task //
 	/////////////////////////////
-	$scope.MoveTask = function(event, key, val){
+	$scope.MoveTask = function(key, val){
 		var user = firebase.auth().currentUser;
 		if (user){
 			var board = $scope.currentBoard;
@@ -130,11 +130,10 @@ function($rootScope, $scope, $mdDialog, $mdToast){
 	///////////////////////////////////////////////////////////
 	// broadcast up to rootscope to pass to other controller //
 	///////////////////////////////////////////////////////////
-	$scope.UpdateTask = function(event, key, title, label, date, desc){
+	$scope.UpdateTask = function(key, title, label, date, desc){
 		$mdDialog.show({
 			contentElement: '#update_task',
 			parent: angular.element(document.body),
-			targetEvent: event,
 			clickOutsideToClose: true
 		});
 		$rootScope.$broadcast('UpdateData', {
