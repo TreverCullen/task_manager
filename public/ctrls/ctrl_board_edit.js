@@ -1,5 +1,9 @@
 angular.module('TaskApp').controller('EditBoardCtrl',
 function($scope, $mdDialog, $mdToast){
+
+	///////////////////////
+	// obtain board date //
+	///////////////////////
 	$scope.$on('UpdateBoard', function(event, data){
 		$scope.title = data.title;
 		$scope.desc = data.desc;
@@ -10,6 +14,10 @@ function($scope, $mdDialog, $mdToast){
 			clickOutsideToClose: true
 		});
 	});
+
+	//////////////////
+	// update board //
+	//////////////////
 	$scope.submit = function(key){
 		if (!$scope.title || !$scope.desc)
 			$scope.error = true;
@@ -24,7 +32,10 @@ function($scope, $mdDialog, $mdToast){
 			}
 		}
 	};
-	// reopen board list
+
+	///////////////////////
+	// reopen board list //
+	///////////////////////
 	$scope.cancel = function(){
 		$scope.title = null;
 		$scope.desc = null;
@@ -37,7 +48,7 @@ function($scope, $mdDialog, $mdToast){
 	};
 
 	/////////////////
-	// SHARE BOARD //
+	// share board //
 	/////////////////
 	$scope.ShareBoard = function(){
 		$mdToast.show(
@@ -50,7 +61,7 @@ function($scope, $mdDialog, $mdToast){
 	};
 
 	//////////////////
-	// DELETE BOARD //
+	// delete board //
 	//////////////////
 	$scope.DeleteBoard = function(){
 		var user = firebase.auth().currentUser;
@@ -115,6 +126,10 @@ function($scope, $mdDialog, $mdToast){
 			}
 		});
 	};
+
+	////////////////////////////
+	// remove board from user //
+	////////////////////////////
 	function removeFromUser(user){
 		var ref = firebase.database().ref('users/' + user.uid + '/boards');
 		ref.once('value', function(snap){
@@ -124,6 +139,10 @@ function($scope, $mdDialog, $mdToast){
 			});
 		});
 	}
+
+	////////////////////////////
+	// remove user form board //
+	////////////////////////////
 	function removeFromBoard(user){
 		var ref = firebase.database().ref('boards/' + $scope.key + '/users');
 		ref.once('value', function(snap){
@@ -133,6 +152,10 @@ function($scope, $mdDialog, $mdToast){
 			});
 		});
 	}
+
+	//////////////////
+	// remove board //
+	//////////////////
 	function fullBoardDelete(){
 		firebase.database().ref('boards/' + $scope.key).set(null);
 		firebase.database().ref('tasks/' + $scope.key).set(null);

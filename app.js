@@ -4,6 +4,7 @@ var http = require('http');
 var pug = require('pug');
 var path = require('path');
 var bodyParser = require('body-parser');
+var marked = require('marked');
 
 // app config
 var app = express();

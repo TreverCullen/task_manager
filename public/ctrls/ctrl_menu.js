@@ -5,6 +5,9 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 	$scope.icon = 'menu';
 	$scope.sortType = 'label';
 
+	////////////
+	// logout //
+	////////////
 	$scope.Logout = function() {
 		firebase.auth().signOut().then(function() {
 			location.pathname = "/login";
@@ -12,6 +15,10 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 			alert(error.message);
 		});
 	};
+
+	//////////////
+	// new task //
+	//////////////
 	$scope.TaskDialog = function() {
 		if ($scope.isOpen){
 			$mdDialog.show({
@@ -21,6 +28,10 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 			});
 		}
 	};
+
+	/////////////////
+	// list boards //
+	/////////////////
 	$scope.ListBoardDialog = function() {
 		if ($scope.isOpen){
 			$mdDialog.show({
@@ -30,6 +41,10 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 			});
 		}
 	};
+
+	////////////////
+	// for mobile //
+	////////////////
 	$scope.Enter = function(){
 		if (!$mdMedia('xs'))
 			$scope.isOpen = true;
@@ -40,6 +55,10 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 			$scope.isOpen = false;
 		$scope.icon = 'menu';
 	};
+
+	//////////////////////
+	// change task sort //
+	//////////////////////
 	$scope.Sort = function(){
 		$rootScope.$broadcast('ChangeSort', {
 			type: $scope.sortType

@@ -1,11 +1,19 @@
 angular.module('TaskApp').controller('SubmitBoardCtrl',
 function($scope, $mdDialog, $mdToast){
+
+	//////////////
+	// new user //
+	//////////////
 	$scope.$on('NewUser', function(){
 		$scope.newUser = true;
 		$scope.title = "Hello ";
 		$scope.desc = 'Welcome to Tasqer!';
 		$scope.submit();
 	});
+
+	//////////////////////
+	// submit new board //
+	//////////////////////
 	$scope.submit = function(){
 		if ($scope.code){
 			var user = firebase.auth().currentUser;
@@ -51,6 +59,10 @@ function($scope, $mdDialog, $mdToast){
 			}
 		}
 	};
+
+	/////////////////////
+	// add user part 1 //
+	/////////////////////
 	function addUser(user, key){
 		var ref = firebase.database().ref('users/' + user.uid);
 		ref.once('value', function(snap){
@@ -78,6 +90,9 @@ function($scope, $mdDialog, $mdToast){
 		});
 	}
 
+	/////////////////////
+	// add user part 2 //
+	/////////////////////
 	function pushUser(user, key, ref){
 		ref.child('boards').push(key);
 		ref.update({ current: key });
@@ -85,7 +100,9 @@ function($scope, $mdDialog, $mdToast){
 		$mdDialog.hide();
 	}
 
-	// reopen board list
+	///////////////////////
+	// reopen board list //
+	///////////////////////
 	$scope.cancel = function(){
 		$scope.title = null;
 		$scope.desc = null;

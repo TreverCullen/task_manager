@@ -1,5 +1,11 @@
 angular.module('TaskApp').controller('UpdateTaskCtrl',
 function($scope, $mdDialog){
+
+	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
+
+	/////////////////////////////
+	// set scope to set dialog //
+	/////////////////////////////
 	$scope.$on('UpdateData', function(event, data){
 		$scope.title = data.title;
 		$scope.label = data.label;
@@ -12,8 +18,10 @@ function($scope, $mdDialog){
 			clickOutsideToClose: true
 		});
 	});
-	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
 
+	/////////////////
+	// update task //
+	/////////////////
 	$scope.submit = function(){
 		if (!$scope.title || !$scope.desc
 			|| !$scope.date || !$scope.label)
@@ -36,6 +44,10 @@ function($scope, $mdDialog){
 			}
 		}
 	};
+
+	////////////////////////
+	// clear update board //
+	////////////////////////
 	$scope.cancel = function(){
 		$mdDialog.hide();
 		$scope.title = null;
@@ -44,6 +56,10 @@ function($scope, $mdDialog){
 		$scope.label = null;
 		$scope.error = null;
 	};
+
+	///////////////////////////
+	// send task to upcoming //
+	///////////////////////////
 	$scope.RefreshTask = function(){
 		var user = firebase.auth().currentUser;
 		if (user){

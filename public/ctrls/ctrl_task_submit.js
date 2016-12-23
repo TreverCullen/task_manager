@@ -2,6 +2,10 @@
 angular.module('TaskApp').controller('SubmitTaskCtrl',
 function($scope, $mdDialog){
 	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
+
+	//////////////////////////
+	// add task to database //
+	//////////////////////////
 	$scope.submit = function(){
 		var data = {
 			title: $scope.title,
@@ -35,7 +39,9 @@ function($scope, $mdDialog){
 		};
 	};
 
-	// cancel task and clear form
+	////////////////////////////////
+	// cancel task and clear form //
+	////////////////////////////////
 	$scope.cancel = function(){
 		$mdDialog.hide();
 		$scope.title = null;

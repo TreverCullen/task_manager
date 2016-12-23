@@ -1,7 +1,9 @@
-// Load, Move, Delete, Edit Tasks
 angular.module('TaskApp').controller('BoardCtrl',
 function($scope, $mdDialog, $rootScope){
 
+	//////////////////
+	// create board //
+	//////////////////
 	$scope.BoardDialog = function() {
 		$mdDialog.show({
 			contentElement: '#create_board',
@@ -9,6 +11,10 @@ function($scope, $mdDialog, $rootScope){
 			clickOutsideToClose: true
 		});
 	};
+
+	///////////////////////
+	// edit board dialog //
+	///////////////////////
 	$scope.EditBoardDialog = function(title, desc, key) {
 		$rootScope.$broadcast('UpdateBoard', {
 			key: key,
@@ -17,7 +23,9 @@ function($scope, $mdDialog, $rootScope){
 		});
 	};
 
-	// create board
+	//////////////////
+	// create board //
+	//////////////////
 	firebase.auth().onAuthStateChanged(function(user){
 		if (user) {
 			var ref = firebase.database().ref('users/' + user.uid).child('boards');
@@ -34,8 +42,9 @@ function($scope, $mdDialog, $rootScope){
 		}
 	});
 
-
-	// listeners on boards
+	////////////////
+	// board list //
+	////////////////
 	$scope.$watch('boards', function(){
 		$scope.items = [];
 		if ($scope.boards){
@@ -69,6 +78,9 @@ function($scope, $mdDialog, $rootScope){
 		});
 	}
 
+	//////////////////
+	// change board //
+	//////////////////
 	$scope.selectBoard = function(id){
 		var user = firebase.auth().currentUser;
 		if (user){
@@ -79,10 +91,16 @@ function($scope, $mdDialog, $rootScope){
 		$scope.cancel();
 	};
 
+	/////////////////
+	// sort boards //
+	/////////////////
 	function compFunc(a, b){
 		return a.title - b.title;
 	}
 
+	///////////////////////
+	// hide board dialog //
+	///////////////////////
 	$scope.cancel = function(){
 		$mdDialog.hide();
 	};
