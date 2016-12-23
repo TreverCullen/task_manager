@@ -3,6 +3,30 @@ extend boards.pug
 block content
 
 	//- ------------------ -//
+			  Tasks
+	//- ------------------ -//
+	div(ng-controller="TaskCtrl" class="mobile_container")
+		div(layout="row" class="full-row")
+			div(flex ng-repeat="arr in items track by $index" ng-init="$rowIndex = $index")
+				md-toolbar(layout="row" layout-align="center center") {{titles[$index]}}
+				md-content(ng-class="addClass($rowIndex)")
+					md-card(ng-repeat="task in arr track by $index"
+					ng-click="UpdateTask(task.key, task.title, task.label, task.date, task.desc)")
+						md-card-header
+							md-card-avatar
+								md-icon(md-font-library="material-icons" ng-class="task.label") label
+							md-card-header-text(layout="row" layout-align="space-between center")
+								div(layout="column")
+									span(class="md-title") {{task.title}}
+									span(class="md-subhead") {{task.due}}
+								md-button(class="md-icon-button" style="float: right"
+								ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
+									md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
+										md-tooltip(md-direction="left") {{icon_names[$rowIndex]}}
+						md-card-content(ng-bind-html="markdown(task.desc)")
+
+
+	//- ------------------ -//
 		Submit Task Dialog
 	//- ------------------ -//
 	div(ng-controller="SubmitTaskCtrl")
@@ -80,30 +104,6 @@ block content
 								md-button(ng-click="submit()" class="md-icon-button")
 									md-icon(md-font-library="material-icons") save
 									md-tooltip(md-direction="top") Save
-
-
-	//- ------------------ -//
-			  Tasks
-	//- ------------------ -//
-	div(ng-controller="TaskCtrl" class="mobile_container")
-		div(layout="row" class="full-row")
-			div(flex ng-repeat="arr in items track by $index" ng-init="$rowIndex = $index")
-				md-toolbar(layout="row" layout-align="center center") {{titles[$index]}}
-				md-content(ng-class="addClass($rowIndex)")
-					md-card(ng-repeat="task in arr track by $index"
-					ng-click="UpdateTask(task.key, task.title, task.label, task.date, task.desc)")
-						md-card-header
-							md-card-avatar
-								md-icon(md-font-library="material-icons" ng-class="task.label") label
-							md-card-header-text(layout="row" layout-align="space-between center")
-								div(layout="column")
-									span(class="md-title") {{task.title}}
-									span(class="md-subhead") {{task.due}}
-								md-button(class="md-icon-button" style="float: right"
-								ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
-									md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
-										md-tooltip(md-direction="left") {{icon_names[$rowIndex]}}
-						md-card-content(ng-bind-html="md(task.desc)")
 
 
 block script

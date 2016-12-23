@@ -74,8 +74,10 @@ function($rootScope, $scope, $mdDialog, $mdToast, $sce){
 	//////////////////
 	// add markdown //
 	//////////////////
-	$scope.md = function(input){
-		return $sce.trustAsHtml(marked(input));
+	$scope.markdown = function(input){
+		var temp = marked(input);
+		temp = temp.replace(/<a/g,'<a target="_blank"');
+		return $sce.trustAsHtml(temp);
 	};
 
 	/////////////////

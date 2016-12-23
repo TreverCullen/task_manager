@@ -1,22 +1,44 @@
+/*****************************
+  cards
+*****************************/
+md-card{ outline: none; }
 md-card-content{
 	white-space: pre-wrap;
 	word-break: break-word;
 	margin: -15px 0;
 	font-size: 0.9em;
 }
-md-card-content h1, h2, h3, h4, h5, h6, p{
+md-card-content h1,
+md-card-content h2,
+md-card-content h3,
+md-card-content h4,
+md-card-content h5,
+md-card-content h6,
+md-card-content p,
+md-card-content ul,
+md-card-content ol{
 	margin: -8px 0;
 	padding: 0px 0;
 }
-md-card-content ul, ol{
-	margin: -8px 0;
-	padding: 0px 20px;
+md-card-content ul,
+md-card-content ol{ padding: 0px 20px; }
+md-card-content li{ margin: -8px 0; }
+md-card-content a{
+	color: #2196F3;
+	text-decoration: none;
 }
-md-card-content li{
-	margin: -8px 0;
+md-card-content a:visited{ color: #9C27B0; }
+md-card-content a:hover{ color: #8BC34A; }
+i{
+	display: block;
+	margin-top: -16px;
+	color: gray;
+	font-size: 0.9em;
 }
-md-card-content  a{ text-decoration: none; }
 
+/*****************************
+  icons
+*****************************/
 md-card-avatar .material-icons.Red{ background: rgb(244,67,54); }
 md-card-avatar .material-icons.Orange{ background: #FF9800; }
 md-card-avatar .material-icons.Yellow{ background: #FFC107; }
@@ -24,14 +46,20 @@ md-card-avatar .material-icons.Green{ background: #8BC34A; }
 md-card-avatar .material-icons.Blue{ background: #2196F3; }
 md-card-avatar .material-icons.Purple{ background: #9C27B0; }
 
+/*****************************
+  menu
+*****************************/
 md-fab-speed-dial{
 	position: fixed !important;
 	z-index: 10000;
 }
 md-tooltip{ z-index: 10000 }
-md-toolbar{ box-shadow: 2px 2px 2px rgba(0,0,0,0.12); }
+md-toolbar{ box-shadow: 3px 3px 5px rgba(0,0,0,0.3); }
 md-content{ box-sizing: border-box; }
 
+/*****************************
+  containers and placement
+*****************************/
 .mobile_container{
 	width: 100vw;
 	overflow-x: scroll;
@@ -52,7 +80,6 @@ md-content{
 	overflow-y: scroll;
 	padding-bottom: 100px;
 }
-
 .menu_background{
 	height: 100vh;
 	width: 100vw;
@@ -61,14 +88,9 @@ md-content{
 	position: fixed;
 }
 
-i{
-	display: block;
-	margin-top: -16px;
-	color: gray;
-	font-size: 0.9em;
-}
-
-
+/*****************************
+  mobile stuff
+*****************************/
 @media screen and (min-width: 600px){
 	md-dialog{ min-width: 40%; }
 	.full-row{ width: 100vw; }
