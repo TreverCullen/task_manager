@@ -3,9 +3,9 @@ function($scope, $mdDialog){
 
 	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
 
-	/////////////////////////////
-	// set scope to set dialog //
-	/////////////////////////////
+	////////////////////////////////
+	// set scope to update dialog //
+	////////////////////////////////
 	$scope.$on('UpdateData', function(event, data){
 		$scope.title = data.title;
 		$scope.label = data.label;

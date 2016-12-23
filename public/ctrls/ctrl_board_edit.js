@@ -141,7 +141,7 @@ function($scope, $mdDialog, $mdToast){
 	}
 
 	////////////////////////////
-	// remove user form board //
+	// remove user from board //
 	////////////////////////////
 	function removeFromBoard(user){
 		var ref = firebase.database().ref('boards/' + $scope.key + '/users');
