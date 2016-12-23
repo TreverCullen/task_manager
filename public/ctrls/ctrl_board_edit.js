@@ -2,7 +2,7 @@ angular.module('TaskApp').controller('EditBoardCtrl',
 function($scope, $mdDialog, $mdToast){
 
 	///////////////////////
-	// obtain board date //
+	// obtain board data //
 	///////////////////////
 	$scope.$on('UpdateBoard', function(event, data){
 		$scope.title = data.title;
