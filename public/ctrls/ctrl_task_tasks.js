@@ -1,6 +1,6 @@
 // Load, Move, Delete, Edit Tasks
 angular.module('TaskApp').controller('TaskCtrl',
-function($rootScope, $scope, $mdDialog, $mdToast){
+function($rootScope, $scope, $mdDialog, $mdToast, $sce){
 	$scope.titles = ['Upcoming','In Progress','Done'];
 	$scope.icons = ['forward','done','delete'];
 	$scope.icon_names = ['Start','Done','Delete'];
@@ -69,6 +69,13 @@ function($rootScope, $scope, $mdDialog, $mdToast){
 			}
 			else $scope.$apply();
 		});
+	};
+
+	//////////////////
+	// add markdown //
+	//////////////////
+	$scope.md = function(input){
+		return $sce.trustAsHtml(marked(input));
 	};
 
 	/////////////////

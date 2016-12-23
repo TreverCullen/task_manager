@@ -1,9 +1,21 @@
 md-card-content{
 	white-space: pre-wrap;
 	word-break: break-word;
-	margin-top: -15px;
+	margin: -15px 0;
 	font-size: 0.9em;
 }
+md-card-content h1, h2, h3, h4, h5, h6, p{
+	margin: -8px 0;
+	padding: 0px 0;
+}
+md-card-content ul, ol{
+	margin: -8px 0;
+	padding: 0px 20px;
+}
+md-card-content li{
+	margin: -8px 0;
+}
+
 md-card-avatar .material-icons.Red{ background: rgb(244,67,54); }
 md-card-avatar .material-icons.Orange{ background: #FF9800; }
 md-card-avatar .material-icons.Yellow{ background: #FFC107; }

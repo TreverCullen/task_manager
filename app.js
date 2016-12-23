@@ -14,6 +14,7 @@ app.set('views', path.join(__dirname, '/views'));
 
 // middleware
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/node_modules/marked')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
