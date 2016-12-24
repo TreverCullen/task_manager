@@ -15,6 +15,10 @@ md-card-content{
 	margin: -15px 0;
 	font-size: 0.9em;
 }
+md-card-content pre{
+	white-space: pre-wrap;
+	word-break: break-word;
+}
 md-card-content h1,
 md-card-content h2,
 md-card-content h3,
@@ -59,7 +63,7 @@ md-card-content blockquote{
 	border-left: 2px solid #eee;
 	margin: 0px;
 	padding: 3px 15px;
-	width: 100%;
+	max-width: 100%;
 }
 md-card-content hr{
 	border: none;
