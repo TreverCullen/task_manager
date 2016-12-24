@@ -57,6 +57,7 @@ md-card-content code{
 md-card-content pre code{
 	display: block;
 	padding: 5px;
+	margin-top: -10px;
 }
 md-card-content blockquote{
 	color: gray;
