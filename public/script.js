@@ -7,7 +7,6 @@ var config = {
 firebase.initializeApp(config);
 
 window.onload = function(){
-
 	// redirect for auth
 	firebase.auth().onAuthStateChanged(function(user) {
 		if (user && location.pathname == "/login") {

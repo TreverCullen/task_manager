@@ -1,4 +1,11 @@
 /*****************************
+  basic
+*****************************/
+html{
+	font-family: sans-serif;
+}
+
+/*****************************
   cards
 *****************************/
 md-card{ outline: none; }
@@ -34,6 +41,31 @@ i{
 	margin-top: -16px;
 	color: gray;
 	font-size: 0.9em;
+}
+md-card-content img{ max-width: 100%; }
+md-card-content code{
+	display: inline-block;
+	margin: 2px 0;
+	background: #eee;
+	border-radius: 2px;
+	padding: 3px;
+}
+md-card-content pre code{
+	display: block;
+	padding: 5px;
+}
+md-card-content blockquote{
+	color: gray;
+	border-left: 2px solid #eee;
+	margin: 0px;
+	padding: 3px 15px;
+	width: 100%;
+}
+md-card-content hr{
+	border: none;
+	height: 1px;
+	background: #eee;
+	margin: 2px;
 }
 
 /*****************************

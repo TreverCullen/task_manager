@@ -17,7 +17,7 @@ block content
 								md-icon(md-font-library="material-icons" ng-class="task.label") label
 							md-card-header-text(layout="row" layout-align="space-between center")
 								div(layout="column")
-									span(class="md-title") {{task.title}}
+									span(class="md-title") #[b {{task.title}}]
 									span(class="md-subhead") {{task.due}}
 								md-button(class="md-icon-button" style="float: right"
 								ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
