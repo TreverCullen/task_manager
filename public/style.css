@@ -33,6 +33,10 @@ md-card-content ol{
 }
 md-card-content ul,
 md-card-content ol{ padding: 0px 20px; }
+md-card-content ul ul,
+md-card-content ul ol,
+md-card-content ol ul,
+md-card-content ol ol{ margin-bottom: -23px; }
 md-card-content li{ margin: -8px 0; }
 md-card-content a{
 	color: #2196F3;
