@@ -41,6 +41,7 @@ md-card-content li{ margin: -8px 0; }
 md-card-content a{
 	color: #2196F3;
 	text-decoration: none;
+	cursor: pointer;
 }
 md-card-content a:visited{ color: #9C27B0; }
 md-card-content a:hover{ color: #8BC34A; }
