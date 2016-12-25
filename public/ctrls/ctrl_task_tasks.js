@@ -11,7 +11,7 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 	////////////////////////
 	$scope.$watch('currentBoard', function(){
 		var user = firebase.auth().currentUser;
-		if (user){
+		if (user && $scope.currentBoard){
 			var ref = firebase.database().ref('boards/' + $scope.currentBoard);
 			ref.once('value', function(snap){
 				var title = snap.val().title;

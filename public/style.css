@@ -128,6 +128,9 @@ md-content{
 	background: rgba(255,255,255,0.3);
 	position: fixed;
 }
+.md-dialog-container{
+	z-index: 10001;
+}
 
 /*****************************
   mobile stuff
