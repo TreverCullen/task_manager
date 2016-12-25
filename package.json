@@ -1,23 +1,23 @@
 {
-	"name": "tasqer",
-	"version": "1.0.0",
-	"description": "Task manager like JIRA",
-	"main": "app.js",
-	"scripts": {
-		"start": "node app.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "Trever Cullen",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/TreverCullen/tasqer.git"
-	},
-	"dependencies": {
-		"body-parser": "^1.15.2",
-		"express": "^4.14.0",
-		"firebase": "^3.3.0",
-		"marked": "^0.3.6",
-		"pug": "^2.0.0-beta5"
-	},
-	"license": "ISC"
+  "name": "tasqer",
+  "version": "1.0.0",
+  "description": "Task manager like JIRA",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Trever Cullen",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/TreverCullen/tasqer.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "firebase": "^3.3.0",
+    "marked": "^0.3.6",
+    "pug": "^2.0.0-beta5"
+  },
+  "license": "ISC"
 }

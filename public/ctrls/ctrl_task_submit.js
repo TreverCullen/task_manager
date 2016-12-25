@@ -13,8 +13,7 @@ function($scope, $mdDialog){
 			date: $scope.date,
 			label: $scope.label
 		}
-		if (!data.title || !data.desc
-			|| !data.date || !data.label)
+		if (!data.title || !data.desc || !data.date || !data.label)
 			$scope.error = true;
 		else{
 			var user = firebase.auth().currentUser;

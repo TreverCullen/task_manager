@@ -23,8 +23,7 @@ function($scope, $mdDialog){
 	// update task //
 	/////////////////
 	$scope.submit = function(){
-		if (!$scope.title || !$scope.desc
-			|| !$scope.date || !$scope.label)
+		if (!$scope.title || !$scope.desc || !$scope.date || !$scope.label)
 			$scope.error = true;
 		else{
 			var user = firebase.auth().currentUser;

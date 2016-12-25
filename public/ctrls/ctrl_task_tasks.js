@@ -1,6 +1,6 @@
 // Load, Move, Delete, Edit Tasks
 angular.module('TaskApp').controller('TaskCtrl',
-function($rootScope, $scope, $mdDialog, $mdToast, $sce){
+function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 	$scope.titles = ['Upcoming','In Progress','Done'];
 	$scope.icons = ['forward','done','delete'];
 	$scope.icon_names = ['Start','Done','Delete'];
@@ -76,8 +76,13 @@ function($rootScope, $scope, $mdDialog, $mdToast, $sce){
 	//////////////////
 	$scope.markdown = function(input){
 		var temp = marked(input);
-		temp = temp.replace(/<a/g,'<a target="_blank"');
-		return $sce.trustAsHtml(temp);
+		temp = temp.replace(/<a/g,'<a ng-click="link($event); $event.stopPropagation();"');
+		temp = temp.replace(/href/g,'data');
+		return temp;
+	};
+	$scope.link = function(object){
+		var win = window.open(object.target.attributes.data.value, '_blank');
+		win.focus();
 	};
 
 	/////////////////
@@ -156,5 +161,21 @@ function($rootScope, $scope, $mdDialog, $mdToast, $sce){
 		if (col == 2)
 			return 'pad';
 		return null;
+	};
+});
+
+///////////////////////////////////////
+// directive to compile dynamic html //
+///////////////////////////////////////
+angular.module('TaskApp').directive('dynamic', function ($compile) {
+	return {
+		restrict: 'A',
+		replace: true,
+		link: function (scope, ele, attrs) {
+			scope.$watch(attrs.dynamic, function(html) {
+				ele.html(html);
+				$compile(ele.contents())(scope);
+			});
+		}
 	};
 });
