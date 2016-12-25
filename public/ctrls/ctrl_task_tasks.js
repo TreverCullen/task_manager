@@ -80,8 +80,8 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 		temp = temp.replace(/href/g,'data');
 		return temp;
 	};
-	$scope.link = function(object){
-		var win = window.open(object.target.attributes.data.value, '_blank');
+	$scope.link = function(event){
+		var win = window.open(event.currentTarget.attributes.data.value, '_blank');
 		win.focus();
 	};
 
