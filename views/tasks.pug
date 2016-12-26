@@ -55,13 +55,17 @@ block content
 								label Description
 								textarea(ng-model="desc")
 
-					md-dialog-actions
-						md-button(ng-click="cancel()" class="md-icon-button")
-							md-icon(md-font-library="material-icons") clear
-							md-tooltip(md-direction="top") Cancel
-						md-button(ng-click="submit()" class="md-icon-button")
-							md-icon(md-font-library="material-icons") save
-							md-tooltip(md-direction="top") Save
+					md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
+						md-button(ng-click="googleDrive()" class="md-icon-button")
+							md-icon(md-font-library="md-icon-button") insert_drive_file
+							md-tooltip(md-direction="top") Drive
+						div
+							md-button(ng-click="cancel()" class="md-icon-button")
+								md-icon(md-font-library="material-icons") clear
+								md-tooltip(md-direction="top") Cancel
+							md-button(ng-click="submit()" class="md-icon-button")
+								md-icon(md-font-library="material-icons") save
+								md-tooltip(md-direction="top") Save
 
 	//- ------------------ -//
 		Update Task Dialog
@@ -92,18 +96,17 @@ block content
 								label Description
 								textarea(ng-model="desc")
 
-					md-dialog-actions
-						div(layout="row" style="width: 100%" layout-align="space-between center")
-							md-button(class="md-icon-button" ng-click="RefreshTask()")
-								md-icon(md-font-library="material-icons") refresh
-								md-tooltip(md-direction="right") Move to Upcoming
-							div
-								md-button(ng-click="cancel()" class="md-icon-button")
-									md-icon(md-font-library="material-icons") clear
-									md-tooltip(md-direction="top") Cancel
-								md-button(ng-click="submit()" class="md-icon-button")
-									md-icon(md-font-library="material-icons") save
-									md-tooltip(md-direction="top") Save
+					md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
+						md-button(class="md-icon-button" ng-click="RefreshTask()")
+							md-icon(md-font-library="material-icons") refresh
+							md-tooltip(md-direction="right") Move to Upcoming
+						div
+							md-button(ng-click="cancel()" class="md-icon-button")
+								md-icon(md-font-library="material-icons") clear
+								md-tooltip(md-direction="top") Cancel
+							md-button(ng-click="submit()" class="md-icon-button")
+								md-icon(md-font-library="material-icons") save
+								md-tooltip(md-direction="top") Save
 
 
 block script
