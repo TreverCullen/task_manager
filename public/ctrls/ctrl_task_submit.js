@@ -2,6 +2,7 @@
 angular.module('TaskApp').controller('SubmitTaskCtrl',
 function($scope, $mdDialog){
 	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
+	$scope.file = 'No File';
 
 	//////////////////////////
 	// add task to database //
@@ -11,7 +12,8 @@ function($scope, $mdDialog){
 			title: $scope.title,
 			desc: $scope.desc,
 			date: $scope.date,
-			label: $scope.label
+			label: $scope.label,
+			file: $scope.file
 		}
 		if (!data.title || !data.desc || !data.date || !data.label)
 			$scope.error = true;
@@ -32,23 +34,24 @@ function($scope, $mdDialog){
 					due: data.date.getTime(),
 					desc: data.desc,
 					label: data.label,
+					file: data.file,
 					stage: 0
 				});
 			}
 		};
 	};
 
+	///////////////////////////
+	// add google drive file //
+	///////////////////////////
 	$scope.googleDrive = function(){
 
 		// The Browser API key obtained from the Google Developers Console.
 		var developerKey = 'AIzaSyDL7_8sVdnD0OcMtR0_tBMykVt_256u5Xc';
-
 		// The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
-		var clientId = "533681754473-o4oubuhhro4h2mafjr4ok1370596j490.apps.googleusercontent.com"
-
+		var clientId = "533681754473-o4oubuhhro4h2mafjr4ok1370596j490.apps.googleusercontent.com";
 		// Scope to use to access user's photos.
-		var scope = ['https://www.googleapis.com/auth/photos'];
-
+		var scope = ['https://www.googleapis.com/auth/drive.readonly'];
 		var pickerApiLoaded = false;
 		var oauthToken;
 
@@ -80,15 +83,19 @@ function($scope, $mdDialog){
 			}
 		}
 
-		// Create and render a Picker object for picking user Photos.
 		function createPicker() {
 			if (pickerApiLoaded && oauthToken) {
-				var picker = new google.picker.PickerBuilder().
-					addView(google.picker.ViewId.PHOTOS).
-					setOAuthToken(oauthToken).
-					setDeveloperKey(developerKey).
-					setCallback(pickerCallback).
-					build();
+				var view = new google.picker.DocsView()
+					.setParent('root')
+					.setIncludeFolders(true);
+				var picker = new google.picker.PickerBuilder()
+					.addView(view)
+					.enableFeature(google.picker.Feature.NAV_HIDDEN)
+            		// .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+					.setOAuthToken(oauthToken)
+					.setDeveloperKey(developerKey)
+					.setCallback(pickerCallback)
+					.build();
 				picker.setVisible(true);
 			}
 		}
@@ -100,12 +107,20 @@ function($scope, $mdDialog){
 				var doc = data[google.picker.Response.DOCUMENTS][0];
 				url = doc[google.picker.Document.URL];
 			}
-			var message = 'You picked: ' + url;
-			// document.getElementById('result').innerHTML = message;
-			console.log(message);
+			if (url != 'nothing'){
+				$scope.file = url;
+				$scope.$apply();
+			}
 		}
 
 		onApiLoad();
+	};
+
+	//////////////////////////////
+	// remove google drive file //
+	//////////////////////////////
+	$scope.removeFile = function(){
+		$scope.file = 'No File';
 	};
 
 	////////////////////////////////
@@ -118,5 +133,6 @@ function($scope, $mdDialog){
 		$scope.date = null;
 		$scope.label = null;
 		$scope.error = false;
+		$scope.file = 'No File';
 	};
 });

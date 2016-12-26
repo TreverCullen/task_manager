@@ -11,7 +11,7 @@ block content
 				md-toolbar(layout="row" layout-align="center center") {{titles[$index]}}
 				md-content(ng-class="addClass($rowIndex)")
 					md-card(ng-repeat="task in arr track by $index"
-					ng-click="UpdateTask(task.key, task.title, task.label, task.date, task.desc)")
+					ng-click="UpdateTask(task.key, task.title, task.label, task.date, task.desc, task.file)")
 						md-card-header
 							md-card-avatar
 								md-icon(md-font-library="material-icons" ng-class="task.label") label
@@ -19,11 +19,17 @@ block content
 								div(layout="column")
 									span(class="md-title") #[b {{task.title}}]
 									span(class="md-subhead") {{task.due}}
-								md-button(class="md-icon-button" style="float: right"
-								ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
-									md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
-										md-tooltip(md-direction="left") {{icon_names[$rowIndex]}}
-						md-card-content(dynamic="markdown(task.desc)")
+								div
+									md-button(ng-if='task.file && task.file != "No File"'
+									class="md-icon-button" data="{{task.file}}"
+									ng-click="link($event); $event.stopPropagation()")
+										md-icon(md-font-library="material-icons") attachment
+											md-tooltip(md-direction="top") {{task.file}}
+									md-button(class="md-icon-button" style="float: right"
+									ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
+										md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
+											md-tooltip(md-direction="bottom") {{icon_names[$rowIndex]}}
+						md-card-content(dynamic="markdown(task.desc, task.file)")
 
 
 	//- ------------------ -//
@@ -56,9 +62,14 @@ block content
 								textarea(ng-model="desc")
 
 					md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
-						md-button(ng-click="googleDrive()" class="md-icon-button")
-							md-icon(md-font-library="md-icon-button") insert_drive_file
-							md-tooltip(md-direction="top") Drive
+						div(layout="row" flex)
+							md-button(ng-if="file == 'No File'" ng-click="googleDrive()" class="md-icon-button")
+								md-icon(md-font-library="md-icon-button") insert_drive_file
+								md-tooltip(md-direction="top") Drive
+							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
+								md-icon(md-font-library="md-icon-button") remove_circle_outline
+								md-tooltip(md-direction="top") Remove
+							p(class="drive-file" ng-model="file" ng-bind="file")
 						div
 							md-button(ng-click="cancel()" class="md-icon-button")
 								md-icon(md-font-library="material-icons") clear
@@ -97,9 +108,17 @@ block content
 								textarea(ng-model="desc")
 
 					md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
-						md-button(class="md-icon-button" ng-click="RefreshTask()")
-							md-icon(md-font-library="material-icons") refresh
-							md-tooltip(md-direction="right") Move to Upcoming
+						div(layout="row" flex)
+							md-button(class="md-icon-button" ng-click="RefreshTask()")
+								md-icon(md-font-library="material-icons") refresh
+								md-tooltip(md-direction="top") Upcoming
+							md-button(ng-if="file == 'No File'" ng-click="googleDrive()" class="md-icon-button")
+								md-icon(md-font-library="md-icon-button") insert_drive_file
+								md-tooltip(md-direction="top") Drive
+							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
+								md-icon(md-font-library="md-icon-button") remove_circle_outline
+								md-tooltip(md-direction="top") Remove
+							p(class="drive-file" ng-model="file" ng-bind="file")
 						div
 							md-button(ng-click="cancel()" class="md-icon-button")
 								md-icon(md-font-library="material-icons") clear

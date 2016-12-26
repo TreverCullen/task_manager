@@ -59,7 +59,8 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 						due: DateDiff(data.due),
 						label: data.label,
 						key: key,
-						date: data.due
+						date: data.due,
+						file: data.file
 					});
 					$scope.items[data.stage].sort(compFunc);
 					count++;
@@ -74,7 +75,7 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 	//////////////////
 	// add markdown //
 	//////////////////
-	$scope.markdown = function(input){
+	$scope.markdown = function(input, file){
 		var temp = marked(input);
 		temp = temp.replace(/<a/g,'<a ng-click="link($event); $event.stopPropagation();"');
 		temp = temp.replace(/href/g,'data');
@@ -144,13 +145,14 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 	///////////////////////////////////////////////////////////
 	// broadcast up to rootscope to pass to other controller //
 	///////////////////////////////////////////////////////////
-	$scope.UpdateTask = function(key, title, label, date, desc){
+	$scope.UpdateTask = function(key, title, label, date, desc, file){
 		$rootScope.$broadcast('UpdateData', {
 			key: key,
 			title: title,
 			date: date,
 			label: label,
-			desc: desc
+			desc: desc,
+			file: file
 		});
 	};
 
