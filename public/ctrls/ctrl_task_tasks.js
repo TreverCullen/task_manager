@@ -60,7 +60,8 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 						label: data.label,
 						key: key,
 						date: data.due,
-						file: data.file
+						file: data.file,
+						direction: ((!data.file || data.file == 'No File') ? 'left' : 'bottom')
 					});
 					$scope.items[data.stage].sort(compFunc);
 					count++;
@@ -84,6 +85,16 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 	$scope.link = function(event){
 		var win = window.open(event.currentTarget.attributes.data.value, '_blank');
 		win.focus();
+	};
+
+	///////////////////////////////
+	// tooltip direction if file //
+	///////////////////////////////
+	$scope.getDirection = function(file){
+		console.log("here");
+		if (!file || file == 'No File')
+			return 'left';
+		return 'bottom';
 	};
 
 	/////////////////

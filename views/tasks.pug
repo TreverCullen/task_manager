@@ -28,7 +28,7 @@ block content
 									md-button(class="md-icon-button" style="float: right"
 									ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
 										md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
-											md-tooltip(md-direction="bottom") {{icon_names[$rowIndex]}}
+											md-tooltip(md-direction="{{task.direction}}") {{icon_names[$rowIndex]}}
 						md-card-content(dynamic="markdown(task.desc, task.file)")
 
 
