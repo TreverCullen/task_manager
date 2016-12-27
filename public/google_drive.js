@@ -55,11 +55,13 @@ function createPicker() {
 // A simple callback implementation.
 function pickerCallback(data) {
 	var url = 'No File';
+	var name = 'No File';
 	if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
 		var doc = data[google.picker.Response.DOCUMENTS][0];
 		url = doc[google.picker.Document.URL];
+		name = doc[google.picker.Document.NAME];
 	}
 	// pass url back to controllers
-	angular.element(document.getElementById('create')).scope().googleDrive(url);
-	angular.element(document.getElementById('update')).scope().googleDrive(url);
+	angular.element(document.getElementById('create')).scope().googleDrive(url, name);
+	angular.element(document.getElementById('update')).scope().googleDrive(url, name);
 }

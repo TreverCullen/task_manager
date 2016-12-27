@@ -13,6 +13,7 @@ function($scope, $mdDialog){
 		$scope.desc = data.desc;
 		$scope.key = data.key;
 		$scope.file = data.file;
+		$scope.name = data.name;
 		$mdDialog.show({
 			contentElement: '#update_task',
 			parent: angular.element(document.body),
@@ -38,7 +39,8 @@ function($scope, $mdDialog){
 						label: $scope.label,
 						due: $scope.date.getTime(),
 						desc: $scope.desc,
-						file: $scope.file
+						file: $scope.file,
+						name: $scope.name
 					});
 					$scope.cancel();
 				});
@@ -49,8 +51,9 @@ function($scope, $mdDialog){
 	///////////////////////////
 	// add google drive file //
 	///////////////////////////
-	$scope.googleDrive = function(url){
+	$scope.googleDrive = function(url, name){
 		$scope.file = url;
+		$scope.name = name;
 	};
 
 	//////////////////////////////
@@ -58,6 +61,7 @@ function($scope, $mdDialog){
 	//////////////////////////////
 	$scope.removeFile = function(){
 		$scope.file = 'No File';
+		$scope.name = 'No File';
 	};
 
 	////////////////////////
@@ -71,6 +75,7 @@ function($scope, $mdDialog){
 		$scope.label = null;
 		$scope.error = null;
 		$scope.file = 'No File';
+		$scope.name = 'No File';
 	};
 
 	///////////////////////////

@@ -11,7 +11,8 @@ block content
 				md-toolbar(layout="row" layout-align="center center") {{titles[$index]}}
 				md-content(ng-class="addClass($rowIndex)")
 					md-card(ng-repeat="task in arr track by $index"
-					ng-click="UpdateTask(task.key, task.title, task.label, task.date, task.desc, task.file)")
+					ng-click="UpdateTask(task.key, task.title, task.label, task.date, \
+					task.desc, task.file, task.name)")
 						md-card-header
 							md-card-avatar
 								md-icon(md-font-library="material-icons" ng-class="task.label") label
@@ -24,7 +25,7 @@ block content
 									class="md-icon-button" data="{{task.file}}"
 									ng-click="link($event); $event.stopPropagation()")
 										md-icon(md-font-library="material-icons") attachment
-											md-tooltip(md-direction="top") {{task.file}}
+											md-tooltip(md-direction="top") {{task.name}}
 									md-button(class="md-icon-button" style="float: right"
 									ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
 										md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
@@ -69,7 +70,7 @@ block content
 							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
 								md-icon(md-font-library="md-icon-button") remove_circle_outline
 								md-tooltip(md-direction="top") Remove
-							p(class="drive-file" ng-model="file" ng-bind="file")
+							p(class="drive-file" ng-model="name" ng-bind="name")
 						div
 							md-button(ng-click="cancel()" class="md-icon-button")
 								md-icon(md-font-library="material-icons") clear
@@ -118,7 +119,7 @@ block content
 							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
 								md-icon(md-font-library="md-icon-button") remove_circle_outline
 								md-tooltip(md-direction="top") Remove
-							p(class="drive-file" ng-model="file" ng-bind="file")
+							p(class="drive-file" ng-model="name" ng-bind="name")
 						div
 							md-button(ng-click="cancel()" class="md-icon-button")
 								md-icon(md-font-library="material-icons") clear

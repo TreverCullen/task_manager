@@ -7,10 +7,13 @@ html{
 	line-height: 100%;
 }
 .drive-file{
-	width: 150px;
+	max-width: 150px;
+	height: 20px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	font-size: 0.8em;
+	color: gray;
 }
 
 /*****************************

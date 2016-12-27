@@ -13,6 +13,7 @@ function($scope, $mdDialog){
 			clickOutsideToClose: true,
 			onShowing: function (event, removePromise) {
 				$scope.file = 'No File';
+				$scope.name = 'No File';
 			}
 		});
 	});
@@ -26,7 +27,8 @@ function($scope, $mdDialog){
 			desc: $scope.desc,
 			date: $scope.date,
 			label: $scope.label,
-			file: $scope.file
+			file: $scope.file,
+			name: $scope.name
 		}
 		if (!data.title || !data.desc || !data.date || !data.label)
 			$scope.error = true;
@@ -48,6 +50,7 @@ function($scope, $mdDialog){
 					desc: data.desc,
 					label: data.label,
 					file: data.file,
+					name: data.name,
 					stage: 0
 				});
 			}
@@ -57,8 +60,9 @@ function($scope, $mdDialog){
 	///////////////////////////
 	// add google drive file //
 	///////////////////////////
-	$scope.googleDrive = function(url){
+	$scope.googleDrive = function(url, name){
 		$scope.file = url;
+		$scope.name = name;
 	};
 
 	//////////////////////////////
@@ -66,13 +70,13 @@ function($scope, $mdDialog){
 	//////////////////////////////
 	$scope.removeFile = function(){
 		$scope.file = 'No File';
+		$scope.name = 'No File';
 	};
 
 	////////////////////////////////
 	// cancel task and clear form //
 	////////////////////////////////
 	$scope.cancel = function(){
-		console.log("cancel");
 		$mdDialog.hide();
 		$scope.title = null;
 		$scope.desc = null;
@@ -80,5 +84,6 @@ function($scope, $mdDialog){
 		$scope.label = null;
 		$scope.error = false;
 		$scope.file = 'No File';
+		$scope.name = 'No File';
 	};
 });

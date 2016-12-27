@@ -61,6 +61,7 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 						key: key,
 						date: data.due,
 						file: data.file,
+						name: data.name,
 						direction: ((!data.file || data.file == 'No File') ? 'left' : 'bottom')
 					});
 					$scope.items[data.stage].sort(compFunc);
@@ -156,14 +157,15 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
 	///////////////////////////////////////////////////////////
 	// broadcast up to rootscope to pass to other controller //
 	///////////////////////////////////////////////////////////
-	$scope.UpdateTask = function(key, title, label, date, desc, file){
+	$scope.UpdateTask = function(key, title, label, date, desc, file, name){
 		$rootScope.$broadcast('UpdateData', {
 			key: key,
 			title: title,
 			date: date,
 			label: label,
 			desc: desc,
-			file: file
+			file: file,
+			name: name
 		});
 	};
 
