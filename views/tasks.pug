@@ -35,7 +35,7 @@ block content
 	//- ------------------ -//
 		Submit Task Dialog
 	//- ------------------ -//
-	div(ng-controller="SubmitTaskCtrl")
+	div(ng-controller="SubmitTaskCtrl" id="create")
 		div(style="visibility: hidden")
 			div(class="md-dialog-container" id="create_task")
 				md-dialog(layout-padding aria-label="Create Task")
@@ -63,7 +63,7 @@ block content
 
 					md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
 						div(layout="row" flex)
-							md-button(ng-if="file == 'No File'" ng-click="googleDrive()" class="md-icon-button")
+							md-button(ng-if="file == 'No File'" onclick="createPicker()" class="md-icon-button")
 								md-icon(md-font-library="md-icon-button") insert_drive_file
 								md-tooltip(md-direction="top") Drive
 							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
@@ -81,7 +81,7 @@ block content
 	//- ------------------ -//
 		Update Task Dialog
 	//- ------------------ -//
-	div(ng-controller="UpdateTaskCtrl")
+	div(ng-controller="UpdateTaskCtrl" id="update")
 		div(style="visibility: hidden")
 			div(class="md-dialog-container" id="update_task")
 				md-dialog(layout-padding aria-label="Update Task")
@@ -112,7 +112,7 @@ block content
 							md-button(class="md-icon-button" ng-click="RefreshTask()")
 								md-icon(md-font-library="material-icons") refresh
 								md-tooltip(md-direction="top") Upcoming
-							md-button(ng-if="file == 'No File'" ng-click="googleDrive()" class="md-icon-button")
+							md-button(ng-if="file == 'No File'" onclick="createPicker()" class="md-icon-button")
 								md-icon(md-font-library="md-icon-button") insert_drive_file
 								md-tooltip(md-direction="top") Drive
 							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")

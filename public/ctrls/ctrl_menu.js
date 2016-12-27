@@ -20,13 +20,8 @@ function($rootScope, $scope, $mdDialog, $mdMedia) {
 	// new task //
 	//////////////
 	$scope.TaskDialog = function() {
-		if ($scope.isOpen){
-			$mdDialog.show({
-				contentElement: '#create_task',
-				parent: angular.element(document.body),
-				clickOutsideToClose: true
-			});
-		}
+		if ($scope.isOpen)
+			$rootScope.$broadcast('CreateTask');
 	};
 
 	/////////////////

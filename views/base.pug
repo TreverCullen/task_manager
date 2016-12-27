@@ -13,9 +13,9 @@ html(lan = en)
 
 		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
 		script(src='https://www.gstatic.com/firebasejs/3.6.2/firebase.js')
-		script(src='/script.js')
-		script(src='marked/lib/marked.js')
-
+		script(type="text/javascript" src='/script.js')
+		script(type="text/javascript" src='/google_drive.js')
+		script(type="text/javascript" src='marked/lib/marked.js')
 
 	body(ng-app="TaskApp" ng-cloak)
 
@@ -34,7 +34,7 @@ html(lan = en)
 		script(src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js")
 
 		//- google drive picker api
-		script(type="text/javascript" src="https://apis.google.com/js/api.js")
+		script(type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad")
 
-		script(src="module.js")
+		script(type="text/javascript" src="module.js")
 		block script
