@@ -2,7 +2,9 @@
   basic
 *****************************/
 html{
-	font-family: sans-serif;
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.02em;
+	line-height: 100%;
 }
 .drive-file{
 	width: 150px;
