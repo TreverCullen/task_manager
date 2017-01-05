@@ -50,6 +50,9 @@ function createPicker() {
 			.build();
 		picker.setVisible(true);
 	}
+	else if (!oauthToken){
+		onAuthApiLoad();
+	}
 }
 
 // A simple callback implementation.
