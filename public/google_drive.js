@@ -9,7 +9,7 @@ var oauthToken;
 
 // Use the API Loader script to load google.picker and gapi.auth.
 function onApiLoad() {
-	gapi.load('auth', {'callback': onAuthApiLoad});
+	gapi.load('auth');
 	gapi.load('picker', {'callback': onPickerApiLoad});
 }
 
@@ -25,13 +25,13 @@ function onAuthApiLoad() {
 
 function onPickerApiLoad() {
 	pickerApiLoaded = true;
-	createPicker();
+	// createPicker();
 }
 
 function handleAuthResult(authResult) {
 	if (authResult && !authResult.error) {
 		oauthToken = authResult.access_token;
-		// createPicker();
+		createPicker();
 	}
 }
 
