@@ -51,7 +51,11 @@ function createPicker() {
 		picker.setVisible(true);
 	}
 	else if (!oauthToken){
+		console.log('invalid auth token');
 		onAuthApiLoad();
+	}
+	else{
+		console.log('somehow we got here');
 	}
 }
 
