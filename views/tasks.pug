@@ -2,134 +2,132 @@ extend boards.pug
 
 block content
 
-	//- ------------------ -//
-			  Tasks
-	//- ------------------ -//
-	div(ng-controller="TaskCtrl" class="mobile_container")
-		div(layout="row" class="full-row")
-			div(flex ng-repeat="arr in items track by $index" ng-init="$rowIndex = $index")
-				md-toolbar(layout="row" layout-align="center center") {{titles[$index]}}
-				md-content(ng-class="addClass($rowIndex)")
-					md-card(ng-repeat="task in arr track by $index"
-					ng-click="UpdateTask(task.key, task.title, task.label, task.date, \
-					task.desc, task.file, task.name)")
-						md-card-header
-							md-card-avatar
-								md-icon(md-font-library="material-icons" ng-class="task.label") label
-							md-card-header-text(layout="row" layout-align="space-between center")
-								div(layout="column")
-									span(class="md-title") #[b {{task.title}}]
-									span(class="md-subhead") {{task.due}}
-								div
-									md-button(ng-if='task.file && task.file != "No File"'
-									class="md-icon-button" data="{{task.file}}"
-									ng-click="link($event); $event.stopPropagation()")
-										md-icon(md-font-library="material-icons") attachment
-											md-tooltip(md-direction="top") {{task.name}}
-									md-button(class="md-icon-button" style="float: right"
-									ng-click="MoveTask(task.key, $rowIndex); $event.stopPropagation()")
-										md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
-											md-tooltip(md-direction="{{task.direction}}") {{icon_names[$rowIndex]}}
-						md-card-content(dynamic="markdown(task.desc, task.file)")
+    //- ------------------ -//
+              Tasks
+    //- ------------------ -//
+    div(ng-controller="TaskCtrl" class="mobile_container")
+        div(layout="row" class="full-row")
+            div(flex ng-repeat="arr in items track by $index" ng-init="$rowIndex = $index")
+                md-content(ng-class="addClass($rowIndex)")
+                    h2(style="text-align: center; color: #aaa") {{titles[$index]}}
+                    md-card(ng-repeat="task in arr track by $index" ng-click="UpdateTask(task.key)")
+                        md-card-header
+                            md-card-avatar
+                                md-icon(md-font-library="material-icons" ng-class="task.label") label
+                            md-card-header-text(layout="row" layout-align="space-between center")
+                                div(layout="column")
+                                    span(class="md-title") #[b {{task.title}}]
+                                    span(class="md-subhead") {{task.due}}
+                                div
+                                    md-button(ng-if='task.file && task.file != "No File"'
+                                    class="md-icon-button" data="{{task.file}}"
+                                    ng-click="link($event); $event.stopPropagation()")
+                                        md-icon(md-font-library="material-icons") attachment
+                                            md-tooltip(md-direction="top") {{task.name}}
+                                    md-button(class="md-icon-button" style="float: right"
+                                    ng-click="MoveTask(task.key); $event.stopPropagation()")
+                                        md-icon(md-font-library="material-icons") {{icons[$rowIndex]}}
+                                            md-tooltip(md-direction="{{task.direction}}") {{icon_names[$rowIndex]}}
+                        md-card-content(dynamic="markdown(task.desc, task.file)")
 
 
-	//- ------------------ -//
-		Submit Task Dialog
-	//- ------------------ -//
-	div(ng-controller="SubmitTaskCtrl" id="create")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="create_task")
-				md-dialog(layout-padding aria-label="Create Task")
-					md-dialog-content(layout-padding layout="column")
-						div(layout="row" layout-align="space-between center")
-							h4 Create Task
-							p(ng-init="error = false" ng-if="error == true"
-							style="color: red; size: .5em") * All Fields Required
-						div(layout="row")
-							md-input-container(flex)
-								label Title
-								input(ng-model="title")
-						div(layout="row")
-							md-input-container(class="md-block" flex)
-								label Label
-								md-select(ng-model="label")
-									md-option(ng-repeat="label in labels" value="{{label}}") {{label}}
-							md-input-container(class="md-block")
-								label Due Date
-								md-datepicker(ng-model="date")
-						div(layout="row")
-							md-input-container(flex)
-								label Description
-								textarea(ng-model="desc")
+    //- ------------------ -//
+        Submit Task Dialog
+    //- ------------------ -//
+    div(ng-controller="SubmitTaskCtrl" id="create")
+        div(style="visibility: hidden")
+            div(class="md-dialog-container" id="create_task")
+                md-dialog(layout-padding aria-label="Create Task")
+                    md-dialog-content(layout-padding layout="column")
+                        div(layout="row" layout-align="space-between center")
+                            h4 Create Task
+                            p(ng-init="error = false" ng-if="error == true"
+                            style="color: red; size: .5em") * All Fields Required
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Title
+                                input(ng-model="title")
+                        div(layout="row")
+                            md-input-container(class="md-block" flex)
+                                label Label
+                                md-select(ng-model="label")
+                                    md-option(ng-repeat="label in labels" value="{{label}}") {{label}}
+                            md-input-container(class="md-block")
+                                label Due Date
+                                md-datepicker(ng-model="date")
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Description
+                                textarea(ng-model="desc")
 
-					md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
-						div(layout="row" flex)
-							md-button(ng-if="file == 'No File'" onclick="createPicker()" class="md-icon-button")
-								md-icon(md-font-library="md-icon-button") insert_drive_file
-								md-tooltip(md-direction="top") Drive
-							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
-								md-icon(md-font-library="md-icon-button") remove_circle_outline
-								md-tooltip(md-direction="top") Remove
-							p(class="drive-file" ng-model="name" ng-bind="name")
-						div
-							md-button(ng-click="cancel()" class="md-icon-button")
-								md-icon(md-font-library="material-icons") clear
-								md-tooltip(md-direction="top") Cancel
-							md-button(ng-click="submit()" class="md-icon-button")
-								md-icon(md-font-library="material-icons") save
-								md-tooltip(md-direction="top") Save
+                    md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
+                        div(layout="row" flex)
+                            md-button(ng-if="file == 'No File'" onclick="createPicker()" class="md-icon-button")
+                                md-icon(md-font-library="md-icon-button") insert_drive_file
+                                md-tooltip(md-direction="top") Drive
+                            md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
+                                md-icon(md-font-library="md-icon-button") remove_circle_outline
+                                md-tooltip(md-direction="top") Remove
+                            p(class="drive-file" ng-model="name" ng-bind="name")
+                        div
+                            md-button(ng-click="cancel()" class="md-icon-button")
+                                md-icon(md-font-library="material-icons") clear
+                                md-tooltip(md-direction="top") Cancel
+                            md-button(ng-click="submit()" class="md-icon-button")
+                                md-icon(md-font-library="material-icons") save
+                                md-tooltip(md-direction="top") Save
 
-	//- ------------------ -//
-		Update Task Dialog
-	//- ------------------ -//
-	div(ng-controller="UpdateTaskCtrl" id="update")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="update_task")
-				md-dialog(layout-padding aria-label="Update Task")
-					md-dialog-content(layout-padding layout="column")
-						div(layout="row" layout-align="space-between center")
-							h4 Update Task
-							p(ng-init="error = false" ng-if="error == true"
-							style="color: red; size: .5em") * All Fields Required
-						div(layout="row")
-							md-input-container(flex)
-								label Title
-								input(ng-model="title")
-						div(layout="row")
-							md-input-container(class="md-block" flex)
-								label Label
-								md-select(ng-model="label")
-									md-option(ng-repeat="label in labels" value="{{label}}") {{label}}
-							md-input-container(class="md-block")
-								label Due Date
-								md-datepicker(ng-model="date")
-						div(layout="row")
-							md-input-container(flex)
-								label Description
-								textarea(ng-model="desc")
+    //- ------------------ -//
+        Update Task Dialog
+    //- ------------------ -//
+    div(ng-controller="UpdateTaskCtrl" id="update")
+        div(style="visibility: hidden")
+            div(class="md-dialog-container" id="update_task")
+                md-dialog(layout-padding aria-label="Update Task")
+                    md-dialog-content(layout-padding layout="column")
+                        div(layout="row" layout-align="space-between center")
+                            h4 Update Task
+                            p(ng-init="error = false" ng-if="error == true"
+                            style="color: red; size: .5em") * All Fields Required
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Title
+                                input(ng-model="title")
+                        div(layout="row")
+                            md-input-container(class="md-block" flex)
+                                label Label
+                                md-select(ng-model="label")
+                                    md-option(ng-repeat="label in labels" value="{{label}}") {{label}}
+                            md-input-container(class="md-block")
+                                label Due Date
+                                md-datepicker(ng-model="date")
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Description
+                                textarea(ng-model="desc")
 
-					md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
-						div(layout="row" flex)
-							md-button(class="md-icon-button" ng-click="RefreshTask()")
-								md-icon(md-font-library="material-icons") refresh
-								md-tooltip(md-direction="top") Upcoming
-							md-button(ng-if="file == 'No File'" onclick="createPicker()" class="md-icon-button")
-								md-icon(md-font-library="md-icon-button") insert_drive_file
-								md-tooltip(md-direction="top") Drive
-							md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
-								md-icon(md-font-library="md-icon-button") remove_circle_outline
-								md-tooltip(md-direction="top") Remove
-							p(class="drive-file" ng-model="name" ng-bind="name")
-						div
-							md-button(ng-click="cancel()" class="md-icon-button")
-								md-icon(md-font-library="material-icons") clear
-								md-tooltip(md-direction="top") Cancel
-							md-button(ng-click="submit()" class="md-icon-button")
-								md-icon(md-font-library="material-icons") save
-								md-tooltip(md-direction="top") Save
+                    md-dialog-actions(layout="row" style="width: 100%" layout-align="space-between center")
+                        div(layout="row" flex)
+                            md-button(class="md-icon-button" ng-click="RefreshTask()")
+                                md-icon(md-font-library="material-icons") refresh
+                                md-tooltip(md-direction="top") Upcoming
+                            md-button(ng-if="file == 'No File'" onclick="createPicker()" class="md-icon-button")
+                                md-icon(md-font-library="md-icon-button") insert_drive_file
+                                md-tooltip(md-direction="top") Drive
+                            md-button(ng-if="file != 'No File'" ng-click="removeFile()" class="md-icon-button")
+                                md-icon(md-font-library="md-icon-button") remove_circle_outline
+                                md-tooltip(md-direction="top") Remove
+                            p(class="drive-file" ng-model="name" ng-bind="name")
+                        div
+                            md-button(ng-click="cancel()" class="md-icon-button")
+                                md-icon(md-font-library="material-icons") clear
+                                md-tooltip(md-direction="top") Cancel
+                            md-button(ng-click="submit()" class="md-icon-button")
+                                md-icon(md-font-library="material-icons") save
+                                md-tooltip(md-direction="top") Save
 
 
 block script
-	script(src="ctrls/ctrl_task_submit.js")
-	script(src="ctrls/ctrl_task_tasks.js")
-	script(src="ctrls/ctrl_task_update.js")
+    script(src="ctrls/ctrl_task_submit.js")
+    script(src="ctrls/ctrl_task_tasks.js")
+    script(src="ctrls/ctrl_task_update.js")

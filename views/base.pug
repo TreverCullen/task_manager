@@ -1,40 +1,39 @@
 doctype html
 html(lan = en)
-	head
-		title Tasqer
-		meta(name="viewport" content="width=device-width, initial-scale=1")
-		meta(name="google-site-verification" content="SYL8q1FPIfA4UENghp18N9kj8Z_uE23dijCJn5GdcAk")
-		link(rel="shortcut icon" href="/favicon.ico?v4" type="image/x-icon")
-		link(rel="icon" href="/favicon.ico?v2" type="image/x-icon")
-		link(rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css")
-		link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto")
-		link(rel="stylesheet" href="style.css")
+    head
+        title Tasqer
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        meta(name="google-site-verification" content="SYL8q1FPIfA4UENghp18N9kj8Z_uE23dijCJn5GdcAk")
+        link(rel="shortcut icon" href="/favicon.ico?v4" type="image/x-icon")
+        link(rel="icon" href="/favicon.ico?v2" type="image/x-icon")
+        link(rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto")
+        link(rel="stylesheet" href="style.css")
 
-		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-		script(src='https://www.gstatic.com/firebasejs/3.6.2/firebase.js')
-		script(type="text/javascript" src='/script.js')
-		script(type="text/javascript" src='/google_drive.js')
-		script(type="text/javascript" src='marked/lib/marked.js')
+        script(src='https://www.gstatic.com/firebasejs/3.6.10/firebase.js')
 
-	body(ng-app="TaskApp" ng-cloak)
 
-		block content
+        script(type="text/javascript" src='/script.js')
+        script(type="text/javascript" src='/google_drive.js')
+        script(type="text/javascript" src='marked/lib/marked.js')
 
-		//- jQuery libraries
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+    body(ng-app="TaskApp" ng-cloak)
 
-		//- ajax libraries
-		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js")
-		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js")
-		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js")
-		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js")
+        block content
 
-		//- angular library
-		script(src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js")
+        //- jQuery libraries
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js")
 
-		//- google drive picker api
-		script(type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad")
+        //- ajax libraries
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js")
 
-		script(type="text/javascript" src="module.js")
-		block script
+        //- google drive picker api
+        script(type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad")
+
+        script(type="text/javascript" src="module.js")
+        block script

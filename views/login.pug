@@ -2,36 +2,31 @@ extend base.pug
 
 block content
 
-	div(ng-controller="LoginCtrl" )
-		md-content(class="md-padding" style="height: 100vh" layout="row" layout-align="center center")
-			div(class="login")
-				md-card
-					md-card-header
-						md-card-avatar
-							img(src="icon.png")
-						md-card-header-text
-							div(layout="column")
-								span(class="md-title" style="font-size: 1.1em") Tasqer
-								span(class="md-subhead") Login
-					md-card-content.
-						Tasqer is an easy to use, light-weight, simple task management system with #[a(href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank") Markdown] and #[a(href="https://www.google.com/drive/" target="_blank") Google Drive] support!
-					md-card-actions(layout="row" layout-align="end center")
-						md-button(ng-click="Login()") Login with Google
+    script(src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js")
+    link(type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css")
 
+    
+    div(id='firebaseui-auth-container')
+        h1(style="text-align: center; color: #aaa") Tasqer
 
 block script
 
-	script.
-		(function(){
-		'use strict';
-			angular.module('TaskApp', ['ngMaterial'])
-				.config(function($mdIconProvider) {
-					$mdIconProvider.fontSet('md', 'material-icons');
-				})
-				.controller('LoginCtrl', function($scope) {
-					$scope.Login = function(){
-						var provider = new firebase.auth.GoogleAuthProvider();
-						firebase.auth().signInWithRedirect(provider);
-					}
-				});
-		})();
+    script.
+        // FirebaseUI config.
+        var uiConfig = {
+            signInSuccessUrl: '/tasks',
+            signInOptions: [{
+                provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                scopes: ['https://www.googleapis.com/auth/drive.readonly']
+            }],
+            callbacks: {
+                signInSuccess: function(currentUser, credential, redirectUrl) {
+                    setToken(credential.accessToken)
+                    return true;
+                },
+            },
+        };
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);

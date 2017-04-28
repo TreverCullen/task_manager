@@ -1,43 +1,51 @@
 var config = {
-	apiKey: "AIzaSyDL7_8sVdnD0OcMtR0_tBMykVt_256u5Xc",
-	authDomain: "task-1a6cf.firebaseapp.com",
-	databaseURL: "https://task-1a6cf.firebaseio.com",
-	storageBucket: "",
+    apiKey: "AIzaSyBCu_11dba2kgITHe9XVLgvmp83F9f18sw",
+    authDomain: "tasqer-153422.firebaseapp.com",
+    databaseURL: "https://tasqer-153422.firebaseio.com",
+    storageBucket: "tasqer-153422.appspot.com",
+    messagingSenderId: "412850969025"
 };
 firebase.initializeApp(config);
 
-window.onload = function(){
-	// redirect for auth
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user && location.pathname == "/login") {
-			location.pathname = "/tasks";
-			console.log("Logged In");
-		}
-		else if (!user && location.pathname == "/tasks") {
-			location.pathname = "/login";
-			console.log("Not Logged In");
-		}
-	});
+// var initApp = function() {
+//     firebase.auth().onAuthStateChanged(function(user) {
+//         if (user) {
+//             user.getToken().then(function(accessToken) {
+//                 uid = user.uid;
+//                 token = accessToken;
+//             });
+//         } else {
+//             // location.pathname = '/login';
+//         }
+//     }, function(error) {
+//         console.log(error);
+//     });
+// };
+// window.addEventListener('load', function() {
+//     initApp();
+//     // scroll();
+// });
 
-	// snap horizontal scroll
-	var current = $('.mobile_container').scrollLeft();
-	$('.mobile_container').scroll(function(e){
-
-		clearTimeout($.data(this, 'scrollTimer'));
-	    $.data(this, 'scrollTimer', setTimeout(function() {
-
-			var width = $(window).width();
-
-			var elt = $('.mobile_container');
-			var pos = elt.scrollLeft();
-
-			if (pos < current)
-				current = Math.floor(pos / width) * width;
-			else current = Math.ceil(pos / width) * width;
-
-			elt.stop().clearQueue().animate({scrollLeft: current}, 200, "linear");
-			current = pos;
-
-	    }, 100));
-	});
-};
+// var scroll = function(){
+//     // snap horizontal scroll
+// 	var current = $('.mobile_container').scrollLeft();
+// 	$('.mobile_container').scroll(function(e){
+//
+// 		clearTimeout($.data(this, 'scrollTimer'));
+// 	    $.data(this, 'scrollTimer', setTimeout(function() {
+//
+// 			var width = $(window).width();
+//
+// 			var elt = $('.mobile_container');
+// 			var pos = elt.scrollLeft();
+//
+// 			if (pos < current)
+// 				current = Math.floor(pos / width) * width;
+// 			else current = Math.ceil(pos / width) * width;
+//
+// 			elt.stop().clearQueue().animate({scrollLeft: current}, 200, "linear");
+// 			current = pos;
+//
+// 	    }, 100));
+// 	});
+// };

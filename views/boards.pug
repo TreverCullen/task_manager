@@ -2,109 +2,109 @@ extend menu.pug
 
 block content
 
-	//- ------------------ -//
-	//- List Board Dialog
-	//- ------------------ -//
-	div(ng-controller="BoardCtrl")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="list_board")
-				md-dialog(layout-padding aria-label="Create Board")
-					md-dialog-content(layout-padding layout="column")
-						h4 Change Boards
-						md-list(flex)
-							md-list-item(class="secondary-button-padding"
-							ng-click="selectBoard(board.key)"
-							ng-repeat="board in items track by $index")
-								p {{board.title}}#[br]#[i {{board.desc}}]
-								md-button(class="md-secondary" class="md-icon-button"
-								ng-click="EditBoardDialog(board.title, board.desc, \
-								board.key); $event.stopPropagation()")
-									md-icon(md-font-library="material-icons") settings
+    //- ------------------ -//
+    //- List Board Dialog
+    //- ------------------ -//
+    div(ng-controller="BoardCtrl")
+        div(style="visibility: hidden")
+            div(class="md-dialog-container" id="list_board")
+                md-dialog(layout-padding aria-label="Create Board")
+                    md-dialog-content(layout-padding layout="column")
+                        h4 Change Boards
+                        md-list(flex)
+                            md-list-item(class="secondary-button-padding"
+                            ng-click="selectBoard(board.key)"
+                            ng-repeat="board in items track by $index")
+                                p {{board.title}}#[br]#[i {{board.desc}}]
+                                md-button(class="md-secondary" class="md-icon-button"
+                                ng-click="EditBoardDialog(board.title, board.desc, \
+                                board.key); $event.stopPropagation()")
+                                    md-icon(md-font-library="material-icons") settings
 
-					md-dialog-actions
-						md-button(ng-click="cancel()" class="md-icon-button")
-							md-icon(md-font-library="material-icons") clear
-							md-tooltip(md-direction="top") Cancel
-						md-button(ng-click="BoardDialog()" class="md-icon-button")
-							md-icon(md-font-library="material-icons") add
-							md-tooltip(md-direction="top") Add
+                    md-dialog-actions
+                        md-button(ng-click="cancel()" class="md-icon-button")
+                            md-icon(md-font-library="material-icons") clear
+                            md-tooltip(md-direction="top") Cancel
+                        md-button(ng-click="BoardDialog()" class="md-icon-button")
+                            md-icon(md-font-library="material-icons") add
+                            md-tooltip(md-direction="top") Add
 
-	//- ------------------ -//
-	//- Create Board Dialog
-	//- ------------------ -//
-	div(ng-controller="SubmitBoardCtrl")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="create_board")
-				md-dialog(layout-padding aria-label="Create Board")
-					md-dialog-content(layout-padding layout="column")
-						div(layout="row" layout-align="space-between center")
-							h4 Add Board
-							p(ng-init="error = false" ng-if="error == true"
-							style="color: red; size: .5em") * All Fields Required
-						div(layout="row")
-							md-input-container(flex)
-								label Title
-								input(ng-model="title")
-						div(layout="row")
-							md-input-container(flex)
-								label Description
-								textarea(ng-model="desc")
-						p(flex style="text-align: center; margin: -10px") OR
-						div(layout="row")
-							md-input-container(flex)
-								label Share Code
-								input(ng-model="code")
+    //- ------------------ -//
+    //- Create Board Dialog
+    //- ------------------ -//
+    div(ng-controller="SubmitBoardCtrl")
+        div(style="visibility: hidden")
+            div(class="md-dialog-container" id="create_board")
+                md-dialog(layout-padding aria-label="Create Board")
+                    md-dialog-content(layout-padding layout="column")
+                        div(layout="row" layout-align="space-between center")
+                            h4 Add Board
+                            p(ng-init="error = false" ng-if="error == true"
+                            style="color: red; size: .5em") * All Fields Required
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Title
+                                input(ng-model="title")
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Description
+                                textarea(ng-model="desc")
+                        p(flex style="text-align: center; margin: -10px") OR
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Share Code
+                                input(ng-model="code")
 
-					md-dialog-actions
-						md-button(ng-click="cancel()" class="md-icon-button")
-							md-icon(md-font-library="material-icons") clear
-							md-tooltip(md-direction="top") Cancel
-						md-button(ng-click="submit()" class="md-icon-button")
-							md-icon(md-font-library="material-icons") save
-							md-tooltip(md-direction="top") Save
+                    md-dialog-actions
+                        md-button(ng-click="cancel()" class="md-icon-button")
+                            md-icon(md-font-library="material-icons") clear
+                            md-tooltip(md-direction="top") Cancel
+                        md-button(ng-click="submit()" class="md-icon-button")
+                            md-icon(md-font-library="material-icons") save
+                            md-tooltip(md-direction="top") Save
 
-	//- ------------------ -//
-	//- Edit Board Dialog
-	//- ------------------ -//
-	div(ng-controller="EditBoardCtrl")
-		div(style="visibility: hidden")
-			div(class="md-dialog-container" id="edit_board")
-				md-dialog(layout-padding aria-label="Edit Board")
-					md-dialog-content(layout-padding layout="column")
-						div(layout="row" layout-align="space-between center")
-							h4 Edit Board
-							p(ng-init="error = false" ng-if="error == true"
-							style="color: red; size: .5em") * All Fields Required
-						div(layout="row")
-							md-input-container(flex)
-								label Title
-								input(ng-model="title")
-						div(layout="row")
-							md-input-container(flex)
-								label Description
-								textarea(ng-model="desc")
+    //- ------------------ -//
+    //- Edit Board Dialog
+    //- ------------------ -//
+    div(ng-controller="EditBoardCtrl")
+        div(style="visibility: hidden")
+            div(class="md-dialog-container" id="edit_board")
+                md-dialog(layout-padding aria-label="Edit Board")
+                    md-dialog-content(layout-padding layout="column")
+                        div(layout="row" layout-align="space-between center")
+                            h4 Edit Board
+                            p(ng-init="error = false" ng-if="error == true"
+                            style="color: red; size: .5em") * All Fields Required
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Title
+                                input(ng-model="title")
+                        div(layout="row")
+                            md-input-container(flex)
+                                label Description
+                                textarea(ng-model="desc")
 
-					md-dialog-actions
-						div(layout="row" style="width: 100%" layout-align="space-between center")
-							div
-								md-button(class="md-icon-button" ng-click="DeleteBoard()")
-									md-icon(md-font-library="material-icons") delete
-									md-tooltip(md-direction="top") Delete
-								md-button(class="md-icon-button" ng-click="ShareBoard()")
-									md-icon(md-font-library="material-icons") share
-									md-tooltip(md-direction="top") Share Code
-							div
-								md-button(ng-click="cancel()" class="md-icon-button")
-									md-icon(md-font-library="material-icons") clear
-									md-tooltip(md-direction="top") Cancel
-								md-button(ng-click="submit()" class="md-icon-button")
-									md-icon(md-font-library="material-icons") save
-									md-tooltip(md-direction="top") Save
+                    md-dialog-actions
+                        div(layout="row" style="width: 100%" layout-align="space-between center")
+                            div
+                                md-button(class="md-icon-button" ng-click="DeleteBoard()")
+                                    md-icon(md-font-library="material-icons") delete
+                                    md-tooltip(md-direction="top") Delete
+                                md-button(class="md-icon-button" ng-click="ShareBoard()")
+                                    md-icon(md-font-library="material-icons") share
+                                    md-tooltip(md-direction="top") Share Code
+                            div
+                                md-button(ng-click="cancel()" class="md-icon-button")
+                                    md-icon(md-font-library="material-icons") clear
+                                    md-tooltip(md-direction="top") Cancel
+                                md-button(ng-click="submit()" class="md-icon-button")
+                                    md-icon(md-font-library="material-icons") save
+                                    md-tooltip(md-direction="top") Save
 
-	block content
+    block content
 
 block script
-	block script
-	script(src="ctrls/ctrl_board_boards.js")
-	script(src="ctrls/ctrl_board_submit.js")
-	script(src="ctrls/ctrl_board_edit.js")
+    block script
+    script(src="ctrls/ctrl_board_boards.js")
+    script(src="ctrls/ctrl_board_submit.js")
+    script(src="ctrls/ctrl_board_edit.js")

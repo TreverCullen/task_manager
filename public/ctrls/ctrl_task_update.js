@@ -1,51 +1,66 @@
 angular.module('TaskApp').controller('UpdateTaskCtrl',
-function($scope, $mdDialog){
+function($rootScope, $scope, $mdDialog){
 
-	$scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
+    $scope.labels = ["None","Red","Orange","Yellow","Green","Blue","Purple"];
 
-	////////////////////////////////
-	// set scope to update dialog //
-	////////////////////////////////
-	$scope.$on('UpdateData', function(event, data){
-		$scope.title = data.title;
-		$scope.label = data.label;
-		$scope.date = new Date(data.date);
-		$scope.desc = data.desc;
-		$scope.key = data.key;
-		$scope.file = data.file;
-		$scope.name = data.name;
-		$mdDialog.show({
-			contentElement: '#update_task',
-			parent: angular.element(document.body),
-			clickOutsideToClose: true
-		});
-	});
+    ////////////////////////////////
+    // set scope to update dialog //
+    ////////////////////////////////
+    $scope.$on('UpdateData', function(event, data){
+        $scope.key = data.key;
+        $.ajax({
+            url: '/api/v1/task/'+$scope.key+'?uid='+$rootScope.uid+'&board='+$rootScope.currentBoard,
+            type: 'GET',
+            success: function(data){
+                setData(data);
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+    });
+    var setData = function(data){
+        $scope.title = data.title;
+        $scope.desc = data.desc;
+        $scope.date = new Date(parseInt(data.due));
+        $scope.label = data.label;
+        $scope.file = data.file;
+        $scope.name = data.name;
+        $mdDialog.show({
+            contentElement: '#update_task',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        });
+    };
 
-	/////////////////
-	// update task //
-	/////////////////
+    /////////////////
+    // update task //
+    /////////////////
 	$scope.submit = function(){
-		if (!$scope.title || !$scope.desc || !$scope.date || !$scope.label)
-			$scope.error = true;
-		else{
-			var user = firebase.auth().currentUser;
-			if (user){
-				var parentRef = firebase.database().ref('users/' + user.uid);
-				parentRef.once('value', function(snap){
-					var board = snap.val().current;
-					var ref = firebase.database().ref('tasks/' + board).child($scope.key);
-					ref.update({
-						title: $scope.title,
-						label: $scope.label,
-						due: $scope.date.getTime(),
-						desc: $scope.desc,
-						file: $scope.file,
-						name: $scope.name
-					});
-					$scope.cancel();
-				});
-			}
-		}
+        if (!$scope.title || !$scope.desc || !$scope.date || !$scope.label)
+            $scope.error = true;
+        else{
+            var data = {
+                title: $scope.title,
+                desc: $scope.desc,
+                due: $scope.date.getTime(),
+                label: $scope.label,
+                file: $scope.file,
+                name: $scope.name
+            };
+            $.ajax({
+                url: '/api/v1/task/'+$scope.key+'?uid='+$rootScope.uid+'&board='+$rootScope.currentBoard,
+                type: 'POST',
+                datatype: "application/json",
+                data: data,
+                success: function(data){
+                    $scope.cancel();
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }
 	};
 
 	///////////////////////////
@@ -67,30 +82,27 @@ function($scope, $mdDialog){
 	////////////////////////
 	// clear update board //
 	////////////////////////
-	$scope.cancel = function(){
-		$mdDialog.hide();
-		$scope.title = null;
-		$scope.desc = null;
-		$scope.date = null;
-		$scope.label = null;
-		$scope.error = null;
-		$scope.file = 'No File';
-		$scope.name = 'No File';
-	};
+    $scope.cancel = function(){
+        $mdDialog.hide();
+    };
 
 	///////////////////////////
 	// send task to upcoming //
 	///////////////////////////
 	$scope.RefreshTask = function(){
-		var user = firebase.auth().currentUser;
-		if (user){
-			var parentRef = firebase.database().ref('users/' + user.uid);
-			parentRef.once('value', function(snap){
-				var board = snap.val().current;
-				var ref = firebase.database().ref('tasks/' + board).child($scope.key);
-				ref.update({ stage: 0 });
-				$scope.cancel();
-			});
-		}
+        $.ajax({
+            url: '/api/v1/task/'+$scope.key+'?uid='+$rootScope.uid+'&board='+$rootScope.currentBoard,
+            type: 'POST',
+            datatype: "application/json",
+            data: {
+                stage: 0
+            },
+            success: function(data){
+                $scope.cancel();
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
 	};
 });

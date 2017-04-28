@@ -1,11 +1,14 @@
-// The Browser API key obtained from the Google Developers Console.
-var developerKey = 'AIzaSyDL7_8sVdnD0OcMtR0_tBMykVt_256u5Xc';
-// The Client ID obtained from the Google Developers Console. Replace with your own Client ID.
-var clientId = "533681754473-o4oubuhhro4h2mafjr4ok1370596j490.apps.googleusercontent.com";
-// Scope to use to access user's photos.
+var developerKey = 'AIzaSyBCu_11dba2kgITHe9XVLgvmp83F9f18sw';
+var clientId = '412850969025-eqfot8952hnqat2rafvgj3pda1nhk5rg.apps.googleusercontent.com';
+var appId = '412850969025';
 var scope = ['https://www.googleapis.com/auth/drive.readonly'];
+
 var pickerApiLoaded = false;
-var oauthToken;
+var oauthToken = null;
+
+function setToken(token){
+	oauthToken = token;
+}
 
 // Use the API Loader script to load google.picker and gapi.auth.
 function onApiLoad() {
@@ -36,7 +39,9 @@ function handleAuthResult(authResult) {
 }
 
 function createPicker() {
-	if (pickerApiLoaded && oauthToken) {
+	if (oauthToken == null)
+		onAuthApiLoad();
+	else if (pickerApiLoaded && oauthToken) {
 		var view = new google.picker.DocsView()
 			.setParent('root')
 			.setIncludeFolders(true);
@@ -44,18 +49,12 @@ function createPicker() {
 			.addView(view)
 			.enableFeature(google.picker.Feature.NAV_HIDDEN)
 			// .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+            .setAppId(appId)
 			.setOAuthToken(oauthToken)
 			.setDeveloperKey(developerKey)
 			.setCallback(pickerCallback)
 			.build();
 		picker.setVisible(true);
-	}
-	else if (!oauthToken){
-		console.log('invalid auth token');
-		onAuthApiLoad();
-	}
-	else{
-		console.log('somehow we got here');
 	}
 }
 

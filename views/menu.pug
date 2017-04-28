@@ -2,32 +2,32 @@ extend base.pug
 
 block content
 
-	//- ------------------ -//
-			Menu Button
-	//- ------------------ -//
-	div(ng-controller="MenuCtrl")
-		md-fab-speed-dial(md-open="isOpen" md-direction="up" class="md-scale md-fab-bottom-right"
-		ng-mouseenter="Enter()" ng-mouseleave="Leave()")
-			md-fab-trigger
-				md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog()")
-					md-icon(md-font-library="material-icons" ng-bind="icon")
-					md-tooltip(md-direction="left") New Task
-			md-fab-actions
-				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
-				ng-click="ListBoardDialog()")
-					md-icon(md-font-library="material-icons") list
-					md-tooltip(md-direction="left") Boards
-				md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
-				ng-click="Sort()")
-					md-icon(md-font-library="material-icons") swap_vert
-					md-tooltip(md-direction="left") Change Sort
-				md-button(aria-label="logout" class="md-fab md-raised md-mini md-warn"
-				ng-click="Logout()")
-					md-icon(md-font-library="material-icons") exit_to_app
-					md-tooltip(md-direction="left") Logout
+    //- ------------------ -//
+            Menu Button
+    //- ------------------ -//
+    div(ng-controller="MenuCtrl")
+        md-fab-speed-dial(md-open="isOpen" md-direction="up" class="md-scale md-fab-bottom-right"
+        ng-mouseenter="Enter()" ng-mouseleave="Leave()")
+            md-fab-trigger
+                md-button(aria-label="Menu" class="md-fab md-warn" ng-click="TaskDialog()")
+                    md-icon(md-font-library="material-icons" ng-bind="icon")
+                    md-tooltip(md-direction="left") New Task
+            md-fab-actions
+                md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
+                ng-click="ListBoardDialog()")
+                    md-icon(md-font-library="material-icons") list
+                    md-tooltip(md-direction="left") Boards
+                md-button(aria-label="sort" class="md-fab md-raised md-mini md-warn"
+                ng-click="Sort()")
+                    md-icon(md-font-library="material-icons") swap_vert
+                    md-tooltip(md-direction="left") Change Sort
+                md-button(aria-label="logout" class="md-fab md-raised md-mini md-warn"
+                ng-click="Logout()")
+                    md-icon(md-font-library="material-icons") exit_to_app
+                    md-tooltip(md-direction="left") Logout
 
-	block content
+    block content
 
 block script
-	block script
-	script(src="ctrls/ctrl_menu.js")
+    block script
+    script(src="ctrls/ctrl_menu.js")
