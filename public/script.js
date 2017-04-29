@@ -7,24 +7,18 @@ var config = {
 };
 firebase.initializeApp(config);
 
-// var initApp = function() {
-//     firebase.auth().onAuthStateChanged(function(user) {
-//         if (user) {
-//             user.getToken().then(function(accessToken) {
-//                 uid = user.uid;
-//                 token = accessToken;
-//             });
-//         } else {
-//             // location.pathname = '/login';
-//         }
-//     }, function(error) {
-//         console.log(error);
-//     });
-// };
-// window.addEventListener('load', function() {
-//     initApp();
-//     // scroll();
-// });
+window.onload = function(){
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user && location.pathname == "/login") {
+            location.pathname = "/tasks";
+            console.log("Logged In");
+        }
+        else if (!user && location.pathname == "/tasks") {
+            location.pathname = "/login";
+            console.log("Logged Out");
+        }
+    });
+}
 
 // var scroll = function(){
 //     // snap horizontal scroll
@@ -48,4 +42,3 @@ firebase.initializeApp(config);
 //
 // 	    }, 100));
 // 	});
-// };

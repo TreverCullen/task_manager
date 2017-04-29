@@ -13,7 +13,7 @@ function setToken(token){
 // Use the API Loader script to load google.picker and gapi.auth.
 function onApiLoad() {
 	gapi.load('auth');
-	gapi.load('picker', {'callback': onPickerApiLoad});
+	gapi.load('picker', {'callback': function(){ pickerApiLoaded = true; }});
 }
 
 function onAuthApiLoad() {
@@ -26,11 +26,6 @@ function onAuthApiLoad() {
 	handleAuthResult);
 }
 
-function onPickerApiLoad() {
-	pickerApiLoaded = true;
-	// createPicker();
-}
-
 function handleAuthResult(authResult) {
 	if (authResult && !authResult.error) {
 		oauthToken = authResult.access_token;
@@ -39,9 +34,8 @@ function handleAuthResult(authResult) {
 }
 
 function createPicker() {
-	if (oauthToken == null)
-		onAuthApiLoad();
-	else if (pickerApiLoaded && oauthToken) {
+	onAuthApiLoad();
+	if (pickerApiLoaded && oauthToken) {
 		var view = new google.picker.DocsView()
 			.setParent('root')
 			.setIncludeFolders(true);
@@ -49,7 +43,7 @@ function createPicker() {
 			.addView(view)
 			.enableFeature(google.picker.Feature.NAV_HIDDEN)
 			// .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-            .setAppId(appId)
+			.setAppId(appId)
 			.setOAuthToken(oauthToken)
 			.setDeveloperKey(developerKey)
 			.setCallback(pickerCallback)

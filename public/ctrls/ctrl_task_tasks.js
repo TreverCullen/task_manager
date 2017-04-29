@@ -40,7 +40,7 @@ function($rootScope, $scope, $mdDialog, $mdToast, $compile){
                     else LoadTasks();
                 });
             });
-        } else console.log('Not logged in');
+        } else console.log('Logged Out')
     }, function(error) {
         console.log(error);
     });
