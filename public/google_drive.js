@@ -34,7 +34,8 @@ function handleAuthResult(authResult) {
 }
 
 function createPicker() {
-	onAuthApiLoad();
+	if (!oauthToken)
+		onAuthApiLoad();
 	if (pickerApiLoaded && oauthToken) {
 		var view = new google.picker.DocsView()
 			.setParent('root')
