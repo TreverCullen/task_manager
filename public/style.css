@@ -109,7 +109,7 @@ md-card-avatar .material-icons.Purple{ background: #9C27B0; }
   menu
 *****************************/
 md-fab-speed-dial{
-	/*position: fixed !important;*/
+	position: fixed !important;
 	z-index: 10000;
 }
 md-tooltip{ z-index: 10000 }
